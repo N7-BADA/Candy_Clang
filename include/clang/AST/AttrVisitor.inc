@@ -620,6 +620,10 @@
   bool VisitNoInstrumentFunctionAttr(NoInstrumentFunctionAttr *A) {
     return true; 
   }
+  bool TraverseNoMergeAttr(NoMergeAttr *A);
+  bool VisitNoMergeAttr(NoMergeAttr *A) {
+    return true; 
+  }
   bool TraverseNoMicroMipsAttr(NoMicroMipsAttr *A);
   bool VisitNoMicroMipsAttr(NoMicroMipsAttr *A) {
     return true; 
@@ -2705,6 +2709,15 @@ bool VISITORCLASS<Derived>::TraverseNoInstrumentFunctionAttr(NoInstrumentFunctio
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseNoMergeAttr(NoMergeAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitNoMergeAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseNoMicroMipsAttr(NoMicroMipsAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4464,6 +4477,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseNoInlineAttr(cast<NoInlineAttr>(A));
     case attr::NoInstrumentFunction:
       return getDerived().TraverseNoInstrumentFunctionAttr(cast<NoInstrumentFunctionAttr>(A));
+    case attr::NoMerge:
+      return getDerived().TraverseNoMergeAttr(cast<NoMergeAttr>(A));
     case attr::NoMicroMips:
       return getDerived().TraverseNoMicroMipsAttr(cast<NoMicroMipsAttr>(A));
     case attr::NoMips16:

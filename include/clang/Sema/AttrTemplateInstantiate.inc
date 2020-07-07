@@ -742,6 +742,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<NoInstrumentFunctionAttr>(At);
       return A->clone(C);
     }
+    case attr::NoMerge: {
+      const auto *A = cast<NoMergeAttr>(At);
+      return A->clone(C);
+    }
     case attr::NoMicroMips: {
       const auto *A = cast<NoMicroMipsAttr>(At);
       return A->clone(C);
@@ -1871,6 +1875,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::NoInstrumentFunction: {
+      return nullptr;
+    }
+    case attr::NoMerge: {
       return nullptr;
     }
     case attr::NoMicroMips: {

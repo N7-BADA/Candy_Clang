@@ -1182,6 +1182,11 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::NoMerge: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::NoMicroMips: {
     const auto *SA = cast<NoMicroMipsAttr>(A);
     Record.push_back(SA->isInherited());
@@ -2163,6 +2168,7 @@ Record.push_back(SA->getImplicitReason());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     Record.AddString(SA->getGuid());
+    Record.AddDeclRef(SA->getGuidDecl());
     break;
   }
   case attr::VecReturn: {

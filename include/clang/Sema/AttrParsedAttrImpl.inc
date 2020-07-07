@@ -262,6 +262,7 @@ const ParsedAttrInfoAMDGPUWavesPerEU ParsedAttrInfoAMDGPUWavesPerEU::Instance;
 static constexpr ParsedAttrInfo::Spelling InterruptSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "interrupt"},
   {AttributeCommonInfo::AS_CXX11, "gnu::interrupt"},
+  {AttributeCommonInfo::AS_C2x, "gnu::interrupt"},
 };
 struct ParsedAttrInfoInterrupt final : public ParsedAttrInfo {
   ParsedAttrInfoInterrupt() {
@@ -287,6 +288,7 @@ const ParsedAttrInfoInterrupt ParsedAttrInfoInterrupt::Instance;
 static constexpr ParsedAttrInfo::Spelling AVRSignalSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "signal"},
   {AttributeCommonInfo::AS_CXX11, "gnu::signal"},
+  {AttributeCommonInfo::AS_C2x, "gnu::signal"},
 };
 struct ParsedAttrInfoAVRSignal final : public ParsedAttrInfo {
   ParsedAttrInfoAVRSignal() {
@@ -531,6 +533,7 @@ const ParsedAttrInfoAddressSpace ParsedAttrInfoAddressSpace::Instance;
 static constexpr ParsedAttrInfo::Spelling AliasSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "alias"},
   {AttributeCommonInfo::AS_CXX11, "gnu::alias"},
+  {AttributeCommonInfo::AS_C2x, "gnu::alias"},
 };
 struct ParsedAttrInfoAlias final : public ParsedAttrInfo {
   ParsedAttrInfoAlias() {
@@ -598,6 +601,7 @@ const ParsedAttrInfoAlignValue ParsedAttrInfoAlignValue::Instance;
 static constexpr ParsedAttrInfo::Spelling AlignedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "aligned"},
   {AttributeCommonInfo::AS_CXX11, "gnu::aligned"},
+  {AttributeCommonInfo::AS_C2x, "gnu::aligned"},
   {AttributeCommonInfo::AS_Declspec, "align"},
   {AttributeCommonInfo::AS_Keyword, "alignas"},
   {AttributeCommonInfo::AS_Keyword, "_Alignas"},
@@ -619,9 +623,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   enum Spelling {
     GNU_aligned = 0,
     CXX11_gnu_aligned = 1,
-    Declspec_align = 2,
-    Keyword_alignas = 3,
-    Keyword_Alignas = 4,
+    C2x_gnu_aligned = 2,
+    Declspec_align = 3,
+    Keyword_alignas = 4,
+    Keyword_Alignas = 5,
   SpellingNotCalculated = 15
 
   };
@@ -631,9 +636,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_aligned;
     case 1: return CXX11_gnu_aligned;
-    case 2: return Declspec_align;
-    case 3: return Keyword_alignas;
-    case 4: return Keyword_Alignas;
+    case 2: return C2x_gnu_aligned;
+    case 3: return Declspec_align;
+    case 4: return Keyword_alignas;
+    case 5: return Keyword_Alignas;
   }
 }
 
@@ -643,6 +649,7 @@ const ParsedAttrInfoAligned ParsedAttrInfoAligned::Instance;
 static constexpr ParsedAttrInfo::Spelling AllocAlignSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "alloc_align"},
   {AttributeCommonInfo::AS_CXX11, "gnu::alloc_align"},
+  {AttributeCommonInfo::AS_C2x, "gnu::alloc_align"},
 };
 struct ParsedAttrInfoAllocAlign final : public ParsedAttrInfo {
   ParsedAttrInfoAllocAlign() {
@@ -672,6 +679,7 @@ const ParsedAttrInfoAllocAlign ParsedAttrInfoAllocAlign::Instance;
 static constexpr ParsedAttrInfo::Spelling AllocSizeSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "alloc_size"},
   {AttributeCommonInfo::AS_CXX11, "gnu::alloc_size"},
+  {AttributeCommonInfo::AS_C2x, "gnu::alloc_size"},
 };
 struct ParsedAttrInfoAllocSize final : public ParsedAttrInfo {
   ParsedAttrInfoAllocSize() {
@@ -738,6 +746,7 @@ const ParsedAttrInfoAlwaysDestroy ParsedAttrInfoAlwaysDestroy::Instance;
 static constexpr ParsedAttrInfo::Spelling AlwaysInlineSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "always_inline"},
   {AttributeCommonInfo::AS_CXX11, "gnu::always_inline"},
+  {AttributeCommonInfo::AS_C2x, "gnu::always_inline"},
   {AttributeCommonInfo::AS_Keyword, "__forceinline"},
 };
 struct ParsedAttrInfoAlwaysInline final : public ParsedAttrInfo {
@@ -766,7 +775,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   enum Spelling {
     GNU_always_inline = 0,
     CXX11_gnu_always_inline = 1,
-    Keyword_forceinline = 2,
+    C2x_gnu_always_inline = 2,
+    Keyword_forceinline = 3,
   SpellingNotCalculated = 15
 
   };
@@ -776,7 +786,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_always_inline;
     case 1: return CXX11_gnu_always_inline;
-    case 2: return Keyword_forceinline;
+    case 2: return C2x_gnu_always_inline;
+    case 3: return Keyword_forceinline;
   }
 }
 
@@ -830,6 +841,7 @@ const ParsedAttrInfoAnnotate ParsedAttrInfoAnnotate::Instance;
 static constexpr ParsedAttrInfo::Spelling AnyX86NoCallerSavedRegistersSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "no_caller_saved_registers"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_caller_saved_registers"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_caller_saved_registers"},
 };
 struct ParsedAttrInfoAnyX86NoCallerSavedRegisters final : public ParsedAttrInfo {
   ParsedAttrInfoAnyX86NoCallerSavedRegisters() {
@@ -860,6 +872,7 @@ const ParsedAttrInfoAnyX86NoCallerSavedRegisters ParsedAttrInfoAnyX86NoCallerSav
 static constexpr ParsedAttrInfo::Spelling AnyX86NoCfCheckSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nocf_check"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nocf_check"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nocf_check"},
 };
 struct ParsedAttrInfoAnyX86NoCfCheck final : public ParsedAttrInfo {
   ParsedAttrInfoAnyX86NoCfCheck() {
@@ -1059,6 +1072,7 @@ const ParsedAttrInfoArmMveStrictPolymorphism ParsedAttrInfoArmMveStrictPolymorph
 static constexpr ParsedAttrInfo::Spelling ArtificialSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "artificial"},
   {AttributeCommonInfo::AS_CXX11, "gnu::artificial"},
+  {AttributeCommonInfo::AS_C2x, "gnu::artificial"},
 };
 struct ParsedAttrInfoArtificial final : public ParsedAttrInfo {
   ParsedAttrInfoArtificial() {
@@ -1200,6 +1214,7 @@ const ParsedAttrInfoAssertSharedLock ParsedAttrInfoAssertSharedLock::Instance;
 static constexpr ParsedAttrInfo::Spelling AssumeAlignedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "assume_aligned"},
   {AttributeCommonInfo::AS_CXX11, "gnu::assume_aligned"},
+  {AttributeCommonInfo::AS_C2x, "gnu::assume_aligned"},
 };
 struct ParsedAttrInfoAssumeAligned final : public ParsedAttrInfo {
   ParsedAttrInfoAssumeAligned() {
@@ -1351,6 +1366,7 @@ const ParsedAttrInfoBlocks ParsedAttrInfoBlocks::Instance;
 static constexpr ParsedAttrInfo::Spelling CDeclSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "cdecl"},
   {AttributeCommonInfo::AS_CXX11, "gnu::cdecl"},
+  {AttributeCommonInfo::AS_C2x, "gnu::cdecl"},
   {AttributeCommonInfo::AS_Keyword, "__cdecl"},
   {AttributeCommonInfo::AS_Keyword, "_cdecl"},
 };
@@ -2220,6 +2236,7 @@ const ParsedAttrInfoCarriesDependency ParsedAttrInfoCarriesDependency::Instance;
 static constexpr ParsedAttrInfo::Spelling CleanupSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "cleanup"},
   {AttributeCommonInfo::AS_CXX11, "gnu::cleanup"},
+  {AttributeCommonInfo::AS_C2x, "gnu::cleanup"},
 };
 struct ParsedAttrInfoCleanup final : public ParsedAttrInfo {
   ParsedAttrInfoCleanup() {
@@ -2231,7 +2248,7 @@ struct ParsedAttrInfoCleanup final : public ParsedAttrInfo {
     IsType = 0;
     IsStmt = 0;
     IsKnownToGCC = 1;
-    IsSupportedByPragmaAttribute = 0;
+    IsSupportedByPragmaAttribute = 1;
     Spellings = CleanupSpellings;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
@@ -2241,6 +2258,10 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
     return false;
   }
   return true;
+}
+
+virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_local, /*IsSupported=*/true));
 }
 
 static const ParsedAttrInfoCleanup Instance;
@@ -2356,6 +2377,7 @@ const ParsedAttrInfoCodeSeg ParsedAttrInfoCodeSeg::Instance;
 static constexpr ParsedAttrInfo::Spelling ColdSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "cold"},
   {AttributeCommonInfo::AS_CXX11, "gnu::cold"},
+  {AttributeCommonInfo::AS_C2x, "gnu::cold"},
 };
 struct ParsedAttrInfoCold final : public ParsedAttrInfo {
   ParsedAttrInfoCold() {
@@ -2389,6 +2411,7 @@ const ParsedAttrInfoCold ParsedAttrInfoCold::Instance;
 static constexpr ParsedAttrInfo::Spelling CommonSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "common"},
   {AttributeCommonInfo::AS_CXX11, "gnu::common"},
+  {AttributeCommonInfo::AS_C2x, "gnu::common"},
 };
 struct ParsedAttrInfoCommon final : public ParsedAttrInfo {
   ParsedAttrInfoCommon() {
@@ -2422,8 +2445,10 @@ const ParsedAttrInfoCommon ParsedAttrInfoCommon::Instance;
 static constexpr ParsedAttrInfo::Spelling ConstSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "const"},
   {AttributeCommonInfo::AS_CXX11, "gnu::const"},
+  {AttributeCommonInfo::AS_C2x, "gnu::const"},
   {AttributeCommonInfo::AS_GNU, "__const"},
   {AttributeCommonInfo::AS_CXX11, "gnu::__const"},
+  {AttributeCommonInfo::AS_C2x, "gnu::__const"},
 };
 struct ParsedAttrInfoConst final : public ParsedAttrInfo {
   ParsedAttrInfoConst() {
@@ -2515,6 +2540,7 @@ const ParsedAttrInfoConstInit ParsedAttrInfoConstInit::Instance;
 static constexpr ParsedAttrInfo::Spelling ConstructorSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "constructor"},
   {AttributeCommonInfo::AS_CXX11, "gnu::constructor"},
+  {AttributeCommonInfo::AS_C2x, "gnu::constructor"},
 };
 struct ParsedAttrInfoConstructor final : public ParsedAttrInfo {
   ParsedAttrInfoConstructor() {
@@ -2697,6 +2723,7 @@ static constexpr ParsedAttrInfo::Spelling DLLExportSpellings[] = {
   {AttributeCommonInfo::AS_Declspec, "dllexport"},
   {AttributeCommonInfo::AS_GNU, "dllexport"},
   {AttributeCommonInfo::AS_CXX11, "gnu::dllexport"},
+  {AttributeCommonInfo::AS_C2x, "gnu::dllexport"},
 };
 struct ParsedAttrInfoDLLExport final : public ParsedAttrInfo {
   ParsedAttrInfoDLLExport() {
@@ -2768,6 +2795,7 @@ static constexpr ParsedAttrInfo::Spelling DLLImportSpellings[] = {
   {AttributeCommonInfo::AS_Declspec, "dllimport"},
   {AttributeCommonInfo::AS_GNU, "dllimport"},
   {AttributeCommonInfo::AS_CXX11, "gnu::dllimport"},
+  {AttributeCommonInfo::AS_C2x, "gnu::dllimport"},
 };
 struct ParsedAttrInfoDLLImport final : public ParsedAttrInfo {
   ParsedAttrInfoDLLImport() {
@@ -2838,6 +2866,7 @@ const ParsedAttrInfoDLLImportStaticLocal ParsedAttrInfoDLLImportStaticLocal::Ins
 static constexpr ParsedAttrInfo::Spelling DeprecatedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "deprecated"},
   {AttributeCommonInfo::AS_CXX11, "gnu::deprecated"},
+  {AttributeCommonInfo::AS_C2x, "gnu::deprecated"},
   {AttributeCommonInfo::AS_Declspec, "deprecated"},
   {AttributeCommonInfo::AS_CXX11, "deprecated"},
   {AttributeCommonInfo::AS_C2x, "deprecated"},
@@ -2861,6 +2890,7 @@ const ParsedAttrInfoDeprecated ParsedAttrInfoDeprecated::Instance;
 static constexpr ParsedAttrInfo::Spelling DestructorSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "destructor"},
   {AttributeCommonInfo::AS_CXX11, "gnu::destructor"},
+  {AttributeCommonInfo::AS_C2x, "gnu::destructor"},
 };
 struct ParsedAttrInfoDestructor final : public ParsedAttrInfo {
   ParsedAttrInfoDestructor() {
@@ -3209,6 +3239,7 @@ static constexpr ParsedAttrInfo::Spelling FallThroughSpellings[] = {
   {AttributeCommonInfo::AS_CXX11, "clang::fallthrough"},
   {AttributeCommonInfo::AS_GNU, "fallthrough"},
   {AttributeCommonInfo::AS_CXX11, "gnu::fallthrough"},
+  {AttributeCommonInfo::AS_C2x, "gnu::fallthrough"},
 };
 struct ParsedAttrInfoFallThrough final : public ParsedAttrInfo {
   ParsedAttrInfoFallThrough() {
@@ -3229,6 +3260,7 @@ const ParsedAttrInfoFallThrough ParsedAttrInfoFallThrough::Instance;
 static constexpr ParsedAttrInfo::Spelling FastCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "fastcall"},
   {AttributeCommonInfo::AS_CXX11, "gnu::fastcall"},
+  {AttributeCommonInfo::AS_C2x, "gnu::fastcall"},
   {AttributeCommonInfo::AS_Keyword, "__fastcall"},
   {AttributeCommonInfo::AS_Keyword, "_fastcall"},
 };
@@ -3290,6 +3322,7 @@ const ParsedAttrInfoFlagEnum ParsedAttrInfoFlagEnum::Instance;
 static constexpr ParsedAttrInfo::Spelling FlattenSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "flatten"},
   {AttributeCommonInfo::AS_CXX11, "gnu::flatten"},
+  {AttributeCommonInfo::AS_C2x, "gnu::flatten"},
 };
 struct ParsedAttrInfoFlatten final : public ParsedAttrInfo {
   ParsedAttrInfoFlatten() {
@@ -3328,6 +3361,7 @@ const ParsedAttrInfoFlatten ParsedAttrInfoFlatten::Instance;
 static constexpr ParsedAttrInfo::Spelling FormatSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "format"},
   {AttributeCommonInfo::AS_CXX11, "gnu::format"},
+  {AttributeCommonInfo::AS_C2x, "gnu::format"},
 };
 struct ParsedAttrInfoFormat final : public ParsedAttrInfo {
   ParsedAttrInfoFormat() {
@@ -3357,6 +3391,7 @@ const ParsedAttrInfoFormat ParsedAttrInfoFormat::Instance;
 static constexpr ParsedAttrInfo::Spelling FormatArgSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "format_arg"},
   {AttributeCommonInfo::AS_CXX11, "gnu::format_arg"},
+  {AttributeCommonInfo::AS_C2x, "gnu::format_arg"},
 };
 struct ParsedAttrInfoFormatArg final : public ParsedAttrInfo {
   ParsedAttrInfoFormatArg() {
@@ -3386,6 +3421,7 @@ const ParsedAttrInfoFormatArg ParsedAttrInfoFormatArg::Instance;
 static constexpr ParsedAttrInfo::Spelling GNUInlineSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "gnu_inline"},
   {AttributeCommonInfo::AS_CXX11, "gnu::gnu_inline"},
+  {AttributeCommonInfo::AS_C2x, "gnu::gnu_inline"},
 };
 struct ParsedAttrInfoGNUInline final : public ParsedAttrInfo {
   ParsedAttrInfoGNUInline() {
@@ -3481,6 +3517,7 @@ const ParsedAttrInfoGuardedVar ParsedAttrInfoGuardedVar::Instance;
 static constexpr ParsedAttrInfo::Spelling HotSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "hot"},
   {AttributeCommonInfo::AS_CXX11, "gnu::hot"},
+  {AttributeCommonInfo::AS_C2x, "gnu::hot"},
 };
 struct ParsedAttrInfoHot final : public ParsedAttrInfo {
   ParsedAttrInfoHot() {
@@ -3595,6 +3632,7 @@ const ParsedAttrInfoIBOutletCollection ParsedAttrInfoIBOutletCollection::Instanc
 static constexpr ParsedAttrInfo::Spelling IFuncSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "ifunc"},
   {AttributeCommonInfo::AS_CXX11, "gnu::ifunc"},
+  {AttributeCommonInfo::AS_C2x, "gnu::ifunc"},
 };
 struct ParsedAttrInfoIFunc final : public ParsedAttrInfo {
   ParsedAttrInfoIFunc() {
@@ -4040,6 +4078,7 @@ const ParsedAttrInfoMIGServerRoutine ParsedAttrInfoMIGServerRoutine::Instance;
 static constexpr ParsedAttrInfo::Spelling MSABISpellings[] = {
   {AttributeCommonInfo::AS_GNU, "ms_abi"},
   {AttributeCommonInfo::AS_CXX11, "gnu::ms_abi"},
+  {AttributeCommonInfo::AS_C2x, "gnu::ms_abi"},
 };
 struct ParsedAttrInfoMSABI final : public ParsedAttrInfo {
   ParsedAttrInfoMSABI() {
@@ -4177,6 +4216,7 @@ const ParsedAttrInfoMSNoVTable ParsedAttrInfoMSNoVTable::Instance;
 static constexpr ParsedAttrInfo::Spelling MSStructSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "ms_struct"},
   {AttributeCommonInfo::AS_CXX11, "gnu::ms_struct"},
+  {AttributeCommonInfo::AS_C2x, "gnu::ms_struct"},
 };
 struct ParsedAttrInfoMSStruct final : public ParsedAttrInfo {
   ParsedAttrInfoMSStruct() {
@@ -4212,9 +4252,40 @@ virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr
 static const ParsedAttrInfoMSStruct Instance;
 };
 const ParsedAttrInfoMSStruct ParsedAttrInfoMSStruct::Instance;
+static constexpr ParsedAttrInfo::Spelling MatrixTypeSpellings[] = {
+  {AttributeCommonInfo::AS_GNU, "matrix_type"},
+  {AttributeCommonInfo::AS_CXX11, "clang::matrix_type"},
+  {AttributeCommonInfo::AS_C2x, "clang::matrix_type"},
+};
+struct ParsedAttrInfoMatrixType final : public ParsedAttrInfo {
+  ParsedAttrInfoMatrixType() {
+    AttrKind = ParsedAttr::AT_MatrixType;
+    NumArgs = 2;
+    OptArgs = 0;
+    HasCustomParsing = 0;
+    IsTargetSpecific = 0;
+    IsType = 1;
+    IsStmt = 0;
+    IsKnownToGCC = 0;
+    IsSupportedByPragmaAttribute = 0;
+    Spellings = MatrixTypeSpellings;
+  }
+virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+  if (!isa<TypedefNameDecl>(D)) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "typedefs";
+    return false;
+  }
+  return true;
+}
+
+static const ParsedAttrInfoMatrixType Instance;
+};
+const ParsedAttrInfoMatrixType ParsedAttrInfoMatrixType::Instance;
 static constexpr ParsedAttrInfo::Spelling MayAliasSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "may_alias"},
   {AttributeCommonInfo::AS_CXX11, "gnu::may_alias"},
+  {AttributeCommonInfo::AS_C2x, "gnu::may_alias"},
 };
 struct ParsedAttrInfoMayAlias final : public ParsedAttrInfo {
   ParsedAttrInfoMayAlias() {
@@ -4240,6 +4311,7 @@ const ParsedAttrInfoMayAlias ParsedAttrInfoMayAlias::Instance;
 static constexpr ParsedAttrInfo::Spelling MicroMipsSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "micromips"},
   {AttributeCommonInfo::AS_CXX11, "gnu::micromips"},
+  {AttributeCommonInfo::AS_C2x, "gnu::micromips"},
 };
 struct ParsedAttrInfoMicroMips final : public ParsedAttrInfo {
   ParsedAttrInfoMicroMips() {
@@ -4347,6 +4419,7 @@ const ParsedAttrInfoMinVectorWidth ParsedAttrInfoMinVectorWidth::Instance;
 static constexpr ParsedAttrInfo::Spelling Mips16Spellings[] = {
   {AttributeCommonInfo::AS_GNU, "mips16"},
   {AttributeCommonInfo::AS_CXX11, "gnu::mips16"},
+  {AttributeCommonInfo::AS_C2x, "gnu::mips16"},
 };
 struct ParsedAttrInfoMips16 final : public ParsedAttrInfo {
   ParsedAttrInfoMips16() {
@@ -4385,8 +4458,10 @@ const ParsedAttrInfoMips16 ParsedAttrInfoMips16::Instance;
 static constexpr ParsedAttrInfo::Spelling MipsLongCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "long_call"},
   {AttributeCommonInfo::AS_CXX11, "gnu::long_call"},
+  {AttributeCommonInfo::AS_C2x, "gnu::long_call"},
   {AttributeCommonInfo::AS_GNU, "far"},
   {AttributeCommonInfo::AS_CXX11, "gnu::far"},
+  {AttributeCommonInfo::AS_C2x, "gnu::far"},
 };
 struct ParsedAttrInfoMipsLongCall final : public ParsedAttrInfo {
   ParsedAttrInfoMipsLongCall() {
@@ -4419,8 +4494,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   enum Spelling {
     GNU_long_call = 0,
     CXX11_gnu_long_call = 1,
-    GNU_far = 2,
-    CXX11_gnu_far = 3,
+    C2x_gnu_long_call = 2,
+    GNU_far = 3,
+    CXX11_gnu_far = 4,
+    C2x_gnu_far = 5,
   SpellingNotCalculated = 15
 
   };
@@ -4430,8 +4507,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_long_call;
     case 1: return CXX11_gnu_long_call;
-    case 2: return GNU_far;
-    case 3: return CXX11_gnu_far;
+    case 2: return C2x_gnu_long_call;
+    case 3: return GNU_far;
+    case 4: return CXX11_gnu_far;
+    case 5: return C2x_gnu_far;
   }
 }
 
@@ -4445,8 +4524,10 @@ const ParsedAttrInfoMipsLongCall ParsedAttrInfoMipsLongCall::Instance;
 static constexpr ParsedAttrInfo::Spelling MipsShortCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "short_call"},
   {AttributeCommonInfo::AS_CXX11, "gnu::short_call"},
+  {AttributeCommonInfo::AS_C2x, "gnu::short_call"},
   {AttributeCommonInfo::AS_GNU, "near"},
   {AttributeCommonInfo::AS_CXX11, "gnu::near"},
+  {AttributeCommonInfo::AS_C2x, "gnu::near"},
 };
 struct ParsedAttrInfoMipsShortCall final : public ParsedAttrInfo {
   ParsedAttrInfoMipsShortCall() {
@@ -4479,8 +4560,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   enum Spelling {
     GNU_short_call = 0,
     CXX11_gnu_short_call = 1,
-    GNU_near = 2,
-    CXX11_gnu_near = 3,
+    C2x_gnu_short_call = 2,
+    GNU_near = 3,
+    CXX11_gnu_near = 4,
+    C2x_gnu_near = 5,
   SpellingNotCalculated = 15
 
   };
@@ -4490,8 +4573,10 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_short_call;
     case 1: return CXX11_gnu_short_call;
-    case 2: return GNU_near;
-    case 3: return CXX11_gnu_near;
+    case 2: return C2x_gnu_short_call;
+    case 3: return GNU_near;
+    case 4: return CXX11_gnu_near;
+    case 5: return C2x_gnu_near;
   }
 }
 
@@ -4505,6 +4590,7 @@ const ParsedAttrInfoMipsShortCall ParsedAttrInfoMipsShortCall::Instance;
 static constexpr ParsedAttrInfo::Spelling ModeSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "mode"},
   {AttributeCommonInfo::AS_CXX11, "gnu::mode"},
+  {AttributeCommonInfo::AS_C2x, "gnu::mode"},
 };
 struct ParsedAttrInfoMode final : public ParsedAttrInfo {
   ParsedAttrInfoMode() {
@@ -4670,6 +4756,7 @@ const ParsedAttrInfoNSReturnsRetained ParsedAttrInfoNSReturnsRetained::Instance;
 static constexpr ParsedAttrInfo::Spelling NakedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "naked"},
   {AttributeCommonInfo::AS_CXX11, "gnu::naked"},
+  {AttributeCommonInfo::AS_C2x, "gnu::naked"},
   {AttributeCommonInfo::AS_Declspec, "naked"},
 };
 struct ParsedAttrInfoNaked final : public ParsedAttrInfo {
@@ -4813,6 +4900,7 @@ const ParsedAttrInfoNoBuiltin ParsedAttrInfoNoBuiltin::Instance;
 static constexpr ParsedAttrInfo::Spelling NoCommonSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nocommon"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nocommon"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nocommon"},
 };
 struct ParsedAttrInfoNoCommon final : public ParsedAttrInfo {
   ParsedAttrInfoNoCommon() {
@@ -4851,6 +4939,7 @@ const ParsedAttrInfoNoCommon ParsedAttrInfoNoCommon::Instance;
 static constexpr ParsedAttrInfo::Spelling NoDebugSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nodebug"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nodebug"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nodebug"},
 };
 struct ParsedAttrInfoNoDebug final : public ParsedAttrInfo {
   ParsedAttrInfoNoDebug() {
@@ -5014,6 +5103,7 @@ const ParsedAttrInfoNoEscape ParsedAttrInfoNoEscape::Instance;
 static constexpr ParsedAttrInfo::Spelling NoInlineSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "noinline"},
   {AttributeCommonInfo::AS_CXX11, "gnu::noinline"},
+  {AttributeCommonInfo::AS_C2x, "gnu::noinline"},
   {AttributeCommonInfo::AS_Declspec, "noinline"},
 };
 struct ParsedAttrInfoNoInline final : public ParsedAttrInfo {
@@ -5053,6 +5143,7 @@ const ParsedAttrInfoNoInline ParsedAttrInfoNoInline::Instance;
 static constexpr ParsedAttrInfo::Spelling NoInstrumentFunctionSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "no_instrument_function"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_instrument_function"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_instrument_function"},
 };
 struct ParsedAttrInfoNoInstrumentFunction final : public ParsedAttrInfo {
   ParsedAttrInfoNoInstrumentFunction() {
@@ -5088,9 +5179,31 @@ virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr
 static const ParsedAttrInfoNoInstrumentFunction Instance;
 };
 const ParsedAttrInfoNoInstrumentFunction ParsedAttrInfoNoInstrumentFunction::Instance;
+static constexpr ParsedAttrInfo::Spelling NoMergeSpellings[] = {
+  {AttributeCommonInfo::AS_GNU, "nomerge"},
+  {AttributeCommonInfo::AS_CXX11, "clang::nomerge"},
+  {AttributeCommonInfo::AS_C2x, "clang::nomerge"},
+};
+struct ParsedAttrInfoNoMerge final : public ParsedAttrInfo {
+  ParsedAttrInfoNoMerge() {
+    AttrKind = ParsedAttr::AT_NoMerge;
+    NumArgs = 0;
+    OptArgs = 0;
+    HasCustomParsing = 0;
+    IsTargetSpecific = 0;
+    IsType = 0;
+    IsStmt = 1;
+    IsKnownToGCC = 0;
+    IsSupportedByPragmaAttribute = 0;
+    Spellings = NoMergeSpellings;
+  }
+static const ParsedAttrInfoNoMerge Instance;
+};
+const ParsedAttrInfoNoMerge ParsedAttrInfoNoMerge::Instance;
 static constexpr ParsedAttrInfo::Spelling NoMicroMipsSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nomicromips"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nomicromips"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nomicromips"},
 };
 struct ParsedAttrInfoNoMicroMips final : public ParsedAttrInfo {
   ParsedAttrInfoNoMicroMips() {
@@ -5134,6 +5247,7 @@ const ParsedAttrInfoNoMicroMips ParsedAttrInfoNoMicroMips::Instance;
 static constexpr ParsedAttrInfo::Spelling NoMips16Spellings[] = {
   {AttributeCommonInfo::AS_GNU, "nomips16"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nomips16"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nomips16"},
 };
 struct ParsedAttrInfoNoMips16 final : public ParsedAttrInfo {
   ParsedAttrInfoNoMips16() {
@@ -5177,6 +5291,7 @@ const ParsedAttrInfoNoMips16 ParsedAttrInfoNoMips16::Instance;
 static constexpr ParsedAttrInfo::Spelling NoReturnSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "noreturn"},
   {AttributeCommonInfo::AS_CXX11, "gnu::noreturn"},
+  {AttributeCommonInfo::AS_C2x, "gnu::noreturn"},
   {AttributeCommonInfo::AS_Declspec, "noreturn"},
 };
 struct ParsedAttrInfoNoReturn final : public ParsedAttrInfo {
@@ -5234,10 +5349,13 @@ const ParsedAttrInfoNoSanitize ParsedAttrInfoNoSanitize::Instance;
 static constexpr ParsedAttrInfo::Spelling NoSanitizeSpecificSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "no_address_safety_analysis"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_address_safety_analysis"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_address_safety_analysis"},
   {AttributeCommonInfo::AS_GNU, "no_sanitize_address"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_sanitize_address"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_sanitize_address"},
   {AttributeCommonInfo::AS_GNU, "no_sanitize_thread"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_sanitize_thread"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_sanitize_thread"},
   {AttributeCommonInfo::AS_GNU, "no_sanitize_memory"},
   {AttributeCommonInfo::AS_CXX11, "clang::no_sanitize_memory"},
   {AttributeCommonInfo::AS_C2x, "clang::no_sanitize_memory"},
@@ -5310,6 +5428,7 @@ const ParsedAttrInfoNoSpeculativeLoadHardening ParsedAttrInfoNoSpeculativeLoadHa
 static constexpr ParsedAttrInfo::Spelling NoSplitStackSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "no_split_stack"},
   {AttributeCommonInfo::AS_CXX11, "gnu::no_split_stack"},
+  {AttributeCommonInfo::AS_C2x, "gnu::no_split_stack"},
 };
 struct ParsedAttrInfoNoSplitStack final : public ParsedAttrInfo {
   ParsedAttrInfoNoSplitStack() {
@@ -5426,6 +5545,7 @@ const ParsedAttrInfoNoThreadSafetyAnalysis ParsedAttrInfoNoThreadSafetyAnalysis:
 static constexpr ParsedAttrInfo::Spelling NoThrowSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nothrow"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nothrow"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nothrow"},
   {AttributeCommonInfo::AS_Declspec, "nothrow"},
 };
 struct ParsedAttrInfoNoThrow final : public ParsedAttrInfo {
@@ -5498,6 +5618,7 @@ const ParsedAttrInfoNoUniqueAddress ParsedAttrInfoNoUniqueAddress::Instance;
 static constexpr ParsedAttrInfo::Spelling NonNullSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "nonnull"},
   {AttributeCommonInfo::AS_CXX11, "gnu::nonnull"},
+  {AttributeCommonInfo::AS_C2x, "gnu::nonnull"},
 };
 struct ParsedAttrInfoNonNull final : public ParsedAttrInfo {
   ParsedAttrInfoNonNull() {
@@ -7269,6 +7390,7 @@ const ParsedAttrInfoOwnership ParsedAttrInfoOwnership::Instance;
 static constexpr ParsedAttrInfo::Spelling PackedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "packed"},
   {AttributeCommonInfo::AS_CXX11, "gnu::packed"},
+  {AttributeCommonInfo::AS_C2x, "gnu::packed"},
 };
 struct ParsedAttrInfoPacked final : public ParsedAttrInfo {
   ParsedAttrInfoPacked() {
@@ -7406,6 +7528,7 @@ const ParsedAttrInfoPassObjectSize ParsedAttrInfoPassObjectSize::Instance;
 static constexpr ParsedAttrInfo::Spelling PatchableFunctionEntrySpellings[] = {
   {AttributeCommonInfo::AS_GNU, "patchable_function_entry"},
   {AttributeCommonInfo::AS_CXX11, "gnu::patchable_function_entry"},
+  {AttributeCommonInfo::AS_C2x, "gnu::patchable_function_entry"},
 };
 struct ParsedAttrInfoPatchableFunctionEntry final : public ParsedAttrInfo {
   ParsedAttrInfoPatchableFunctionEntry() {
@@ -7431,7 +7554,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
 
 virtual bool existsInTarget(const TargetInfo &Target) const {
   const llvm::Triple &T = Target.getTriple(); (void)T;
-  return true && (T.getArch() == llvm::Triple::aarch64 || T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
+  return true && (T.getArch() == llvm::Triple::aarch64 || T.getArch() == llvm::Triple::aarch64_be || T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
 }
 
 virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
@@ -7445,6 +7568,7 @@ const ParsedAttrInfoPatchableFunctionEntry ParsedAttrInfoPatchableFunctionEntry:
 static constexpr ParsedAttrInfo::Spelling PcsSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "pcs"},
   {AttributeCommonInfo::AS_CXX11, "gnu::pcs"},
+  {AttributeCommonInfo::AS_C2x, "gnu::pcs"},
 };
 struct ParsedAttrInfoPcs final : public ParsedAttrInfo {
   ParsedAttrInfoPcs() {
@@ -7754,6 +7878,7 @@ const ParsedAttrInfoPtr64 ParsedAttrInfoPtr64::Instance;
 static constexpr ParsedAttrInfo::Spelling PureSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "pure"},
   {AttributeCommonInfo::AS_CXX11, "gnu::pure"},
+  {AttributeCommonInfo::AS_C2x, "gnu::pure"},
 };
 struct ParsedAttrInfoPure final : public ParsedAttrInfo {
   ParsedAttrInfoPure() {
@@ -7779,6 +7904,7 @@ const ParsedAttrInfoPure ParsedAttrInfoPure::Instance;
 static constexpr ParsedAttrInfo::Spelling RegCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "regcall"},
   {AttributeCommonInfo::AS_CXX11, "gnu::regcall"},
+  {AttributeCommonInfo::AS_C2x, "gnu::regcall"},
   {AttributeCommonInfo::AS_Keyword, "__regcall"},
 };
 struct ParsedAttrInfoRegCall final : public ParsedAttrInfo {
@@ -7800,6 +7926,7 @@ const ParsedAttrInfoRegCall ParsedAttrInfoRegCall::Instance;
 static constexpr ParsedAttrInfo::Spelling RegparmSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "regparm"},
   {AttributeCommonInfo::AS_CXX11, "gnu::regparm"},
+  {AttributeCommonInfo::AS_C2x, "gnu::regparm"},
 };
 struct ParsedAttrInfoRegparm final : public ParsedAttrInfo {
   ParsedAttrInfoRegparm() {
@@ -8093,6 +8220,7 @@ static constexpr ParsedAttrInfo::Spelling RestrictSpellings[] = {
   {AttributeCommonInfo::AS_Declspec, "restrict"},
   {AttributeCommonInfo::AS_GNU, "malloc"},
   {AttributeCommonInfo::AS_CXX11, "gnu::malloc"},
+  {AttributeCommonInfo::AS_C2x, "gnu::malloc"},
 };
 struct ParsedAttrInfoRestrict final : public ParsedAttrInfo {
   ParsedAttrInfoRestrict() {
@@ -8121,6 +8249,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     Declspec_restrict = 0,
     GNU_malloc = 1,
     CXX11_gnu_malloc = 2,
+    C2x_gnu_malloc = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8131,6 +8260,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     case 0: return Declspec_restrict;
     case 1: return GNU_malloc;
     case 2: return CXX11_gnu_malloc;
+    case 3: return C2x_gnu_malloc;
   }
 }
 
@@ -8178,6 +8308,7 @@ const ParsedAttrInfoReturnTypestate ParsedAttrInfoReturnTypestate::Instance;
 static constexpr ParsedAttrInfo::Spelling ReturnsNonNullSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "returns_nonnull"},
   {AttributeCommonInfo::AS_CXX11, "gnu::returns_nonnull"},
+  {AttributeCommonInfo::AS_C2x, "gnu::returns_nonnull"},
 };
 struct ParsedAttrInfoReturnsNonNull final : public ParsedAttrInfo {
   ParsedAttrInfoReturnsNonNull() {
@@ -8212,6 +8343,7 @@ const ParsedAttrInfoReturnsNonNull ParsedAttrInfoReturnsNonNull::Instance;
 static constexpr ParsedAttrInfo::Spelling ReturnsTwiceSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "returns_twice"},
   {AttributeCommonInfo::AS_CXX11, "gnu::returns_twice"},
+  {AttributeCommonInfo::AS_C2x, "gnu::returns_twice"},
 };
 struct ParsedAttrInfoReturnsTwice final : public ParsedAttrInfo {
   ParsedAttrInfoReturnsTwice() {
@@ -8346,6 +8478,7 @@ const ParsedAttrInfoScopedLockable ParsedAttrInfoScopedLockable::Instance;
 static constexpr ParsedAttrInfo::Spelling SectionSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "section"},
   {AttributeCommonInfo::AS_CXX11, "gnu::section"},
+  {AttributeCommonInfo::AS_C2x, "gnu::section"},
   {AttributeCommonInfo::AS_Declspec, "allocate"},
 };
 struct ParsedAttrInfoSection final : public ParsedAttrInfo {
@@ -8374,7 +8507,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   enum Spelling {
     GNU_section = 0,
     CXX11_gnu_section = 1,
-    Declspec_allocate = 2,
+    C2x_gnu_section = 2,
+    Declspec_allocate = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8384,7 +8518,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_section;
     case 1: return CXX11_gnu_section;
-    case 2: return Declspec_allocate;
+    case 2: return C2x_gnu_section;
+    case 3: return Declspec_allocate;
   }
 }
 
@@ -8402,6 +8537,7 @@ static constexpr ParsedAttrInfo::Spelling SelectAnySpellings[] = {
   {AttributeCommonInfo::AS_Declspec, "selectany"},
   {AttributeCommonInfo::AS_GNU, "selectany"},
   {AttributeCommonInfo::AS_CXX11, "gnu::selectany"},
+  {AttributeCommonInfo::AS_C2x, "gnu::selectany"},
 };
 struct ParsedAttrInfoSelectAny final : public ParsedAttrInfo {
   ParsedAttrInfoSelectAny() {
@@ -8427,6 +8563,7 @@ const ParsedAttrInfoSelectAny ParsedAttrInfoSelectAny::Instance;
 static constexpr ParsedAttrInfo::Spelling SentinelSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "sentinel"},
   {AttributeCommonInfo::AS_CXX11, "gnu::sentinel"},
+  {AttributeCommonInfo::AS_C2x, "gnu::sentinel"},
 };
 struct ParsedAttrInfoSentinel final : public ParsedAttrInfo {
   ParsedAttrInfoSentinel() {
@@ -8543,6 +8680,7 @@ const ParsedAttrInfoSpeculativeLoadHardening ParsedAttrInfoSpeculativeLoadHarden
 static constexpr ParsedAttrInfo::Spelling StdCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "stdcall"},
   {AttributeCommonInfo::AS_CXX11, "gnu::stdcall"},
+  {AttributeCommonInfo::AS_C2x, "gnu::stdcall"},
   {AttributeCommonInfo::AS_Keyword, "__stdcall"},
   {AttributeCommonInfo::AS_Keyword, "_stdcall"},
 };
@@ -8707,6 +8845,7 @@ const ParsedAttrInfoSwiftIndirectResult ParsedAttrInfoSwiftIndirectResult::Insta
 static constexpr ParsedAttrInfo::Spelling SysVABISpellings[] = {
   {AttributeCommonInfo::AS_GNU, "sysv_abi"},
   {AttributeCommonInfo::AS_CXX11, "gnu::sysv_abi"},
+  {AttributeCommonInfo::AS_C2x, "gnu::sysv_abi"},
 };
 struct ParsedAttrInfoSysVABI final : public ParsedAttrInfo {
   ParsedAttrInfoSysVABI() {
@@ -8727,6 +8866,7 @@ const ParsedAttrInfoSysVABI ParsedAttrInfoSysVABI::Instance;
 static constexpr ParsedAttrInfo::Spelling TLSModelSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "tls_model"},
   {AttributeCommonInfo::AS_CXX11, "gnu::tls_model"},
+  {AttributeCommonInfo::AS_C2x, "gnu::tls_model"},
 };
 struct ParsedAttrInfoTLSModel final : public ParsedAttrInfo {
   ParsedAttrInfoTLSModel() {
@@ -8760,6 +8900,7 @@ const ParsedAttrInfoTLSModel ParsedAttrInfoTLSModel::Instance;
 static constexpr ParsedAttrInfo::Spelling TargetSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "target"},
   {AttributeCommonInfo::AS_CXX11, "gnu::target"},
+  {AttributeCommonInfo::AS_C2x, "gnu::target"},
 };
 struct ParsedAttrInfoTarget final : public ParsedAttrInfo {
   ParsedAttrInfoTarget() {
@@ -8826,6 +8967,7 @@ const ParsedAttrInfoTestTypestate ParsedAttrInfoTestTypestate::Instance;
 static constexpr ParsedAttrInfo::Spelling ThisCallSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "thiscall"},
   {AttributeCommonInfo::AS_CXX11, "gnu::thiscall"},
+  {AttributeCommonInfo::AS_C2x, "gnu::thiscall"},
   {AttributeCommonInfo::AS_Keyword, "__thiscall"},
   {AttributeCommonInfo::AS_Keyword, "_thiscall"},
 };
@@ -8885,6 +9027,7 @@ const ParsedAttrInfoThread ParsedAttrInfoThread::Instance;
 static constexpr ParsedAttrInfo::Spelling TransparentUnionSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "transparent_union"},
   {AttributeCommonInfo::AS_CXX11, "gnu::transparent_union"},
+  {AttributeCommonInfo::AS_C2x, "gnu::transparent_union"},
 };
 struct ParsedAttrInfoTransparentUnion final : public ParsedAttrInfo {
   ParsedAttrInfoTransparentUnion() {
@@ -9162,7 +9305,7 @@ struct ParsedAttrInfoUninitialized final : public ParsedAttrInfo {
     IsType = 0;
     IsStmt = 0;
     IsKnownToGCC = 0;
-    IsSupportedByPragmaAttribute = 0;
+    IsSupportedByPragmaAttribute = 1;
     Spellings = UninitializedSpellings;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
@@ -9174,6 +9317,10 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
+virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_local, /*IsSupported=*/true));
+}
+
 static const ParsedAttrInfoUninitialized Instance;
 };
 const ParsedAttrInfoUninitialized ParsedAttrInfoUninitialized::Instance;
@@ -9181,6 +9328,7 @@ static constexpr ParsedAttrInfo::Spelling UnusedSpellings[] = {
   {AttributeCommonInfo::AS_CXX11, "maybe_unused"},
   {AttributeCommonInfo::AS_GNU, "unused"},
   {AttributeCommonInfo::AS_CXX11, "gnu::unused"},
+  {AttributeCommonInfo::AS_C2x, "gnu::unused"},
   {AttributeCommonInfo::AS_C2x, "maybe_unused"},
 };
 struct ParsedAttrInfoUnused final : public ParsedAttrInfo {
@@ -9210,7 +9358,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     CXX11_maybe_unused = 0,
     GNU_unused = 1,
     CXX11_gnu_unused = 2,
-    C2x_maybe_unused = 3,
+    C2x_gnu_unused = 3,
+    C2x_maybe_unused = 4,
   SpellingNotCalculated = 15
 
   };
@@ -9221,7 +9370,8 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     case 0: return CXX11_maybe_unused;
     case 1: return GNU_unused;
     case 2: return CXX11_gnu_unused;
-    case 3: return C2x_maybe_unused;
+    case 3: return C2x_gnu_unused;
+    case 4: return C2x_maybe_unused;
   }
 }
 
@@ -9265,6 +9415,7 @@ const ParsedAttrInfoUseHandle ParsedAttrInfoUseHandle::Instance;
 static constexpr ParsedAttrInfo::Spelling UsedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "used"},
   {AttributeCommonInfo::AS_CXX11, "gnu::used"},
+  {AttributeCommonInfo::AS_C2x, "gnu::used"},
 };
 struct ParsedAttrInfoUsed final : public ParsedAttrInfo {
   ParsedAttrInfoUsed() {
@@ -9425,6 +9576,7 @@ const ParsedAttrInfoVectorCall ParsedAttrInfoVectorCall::Instance;
 static constexpr ParsedAttrInfo::Spelling VectorSizeSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "vector_size"},
   {AttributeCommonInfo::AS_CXX11, "gnu::vector_size"},
+  {AttributeCommonInfo::AS_C2x, "gnu::vector_size"},
 };
 struct ParsedAttrInfoVectorSize final : public ParsedAttrInfo {
   ParsedAttrInfoVectorSize() {
@@ -9445,6 +9597,7 @@ const ParsedAttrInfoVectorSize ParsedAttrInfoVectorSize::Instance;
 static constexpr ParsedAttrInfo::Spelling VisibilitySpellings[] = {
   {AttributeCommonInfo::AS_GNU, "visibility"},
   {AttributeCommonInfo::AS_CXX11, "gnu::visibility"},
+  {AttributeCommonInfo::AS_C2x, "gnu::visibility"},
 };
 struct ParsedAttrInfoVisibility final : public ParsedAttrInfo {
   ParsedAttrInfoVisibility() {
@@ -9465,6 +9618,7 @@ const ParsedAttrInfoVisibility ParsedAttrInfoVisibility::Instance;
 static constexpr ParsedAttrInfo::Spelling WarnUnusedSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "warn_unused"},
   {AttributeCommonInfo::AS_CXX11, "gnu::warn_unused"},
+  {AttributeCommonInfo::AS_C2x, "gnu::warn_unused"},
 };
 struct ParsedAttrInfoWarnUnused final : public ParsedAttrInfo {
   ParsedAttrInfoWarnUnused() {
@@ -9506,6 +9660,7 @@ static constexpr ParsedAttrInfo::Spelling WarnUnusedResultSpellings[] = {
   {AttributeCommonInfo::AS_CXX11, "clang::warn_unused_result"},
   {AttributeCommonInfo::AS_GNU, "warn_unused_result"},
   {AttributeCommonInfo::AS_CXX11, "gnu::warn_unused_result"},
+  {AttributeCommonInfo::AS_C2x, "gnu::warn_unused_result"},
 };
 struct ParsedAttrInfoWarnUnusedResult final : public ParsedAttrInfo {
   ParsedAttrInfoWarnUnusedResult() {
@@ -9536,6 +9691,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     CXX11_clang_warn_unused_result = 2,
     GNU_warn_unused_result = 3,
     CXX11_gnu_warn_unused_result = 4,
+    C2x_gnu_warn_unused_result = 5,
   SpellingNotCalculated = 15
 
   };
@@ -9548,6 +9704,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
     case 2: return CXX11_clang_warn_unused_result;
     case 3: return GNU_warn_unused_result;
     case 4: return CXX11_gnu_warn_unused_result;
+    case 5: return C2x_gnu_warn_unused_result;
   }
 }
 
@@ -9564,6 +9721,7 @@ const ParsedAttrInfoWarnUnusedResult ParsedAttrInfoWarnUnusedResult::Instance;
 static constexpr ParsedAttrInfo::Spelling WeakSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "weak"},
   {AttributeCommonInfo::AS_CXX11, "gnu::weak"},
+  {AttributeCommonInfo::AS_C2x, "gnu::weak"},
 };
 struct ParsedAttrInfoWeak final : public ParsedAttrInfo {
   ParsedAttrInfoWeak() {
@@ -9625,6 +9783,7 @@ const ParsedAttrInfoWeakImport ParsedAttrInfoWeakImport::Instance;
 static constexpr ParsedAttrInfo::Spelling WeakRefSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "weakref"},
   {AttributeCommonInfo::AS_CXX11, "gnu::weakref"},
+  {AttributeCommonInfo::AS_C2x, "gnu::weakref"},
 };
 struct ParsedAttrInfoWeakRef final : public ParsedAttrInfo {
   ParsedAttrInfoWeakRef() {
@@ -9808,6 +9967,7 @@ const ParsedAttrInfoWorkGroupSizeHint ParsedAttrInfoWorkGroupSizeHint::Instance;
 static constexpr ParsedAttrInfo::Spelling X86ForceAlignArgPointerSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "force_align_arg_pointer"},
   {AttributeCommonInfo::AS_CXX11, "gnu::force_align_arg_pointer"},
+  {AttributeCommonInfo::AS_C2x, "gnu::force_align_arg_pointer"},
 };
 struct ParsedAttrInfoX86ForceAlignArgPointer final : public ParsedAttrInfo {
   ParsedAttrInfoX86ForceAlignArgPointer() {
@@ -10052,6 +10212,7 @@ static const ParsedAttrInfo *AttrInfoMap[] = {
 &ParsedAttrInfoMSInheritance::Instance,
 &ParsedAttrInfoMSNoVTable::Instance,
 &ParsedAttrInfoMSStruct::Instance,
+&ParsedAttrInfoMatrixType::Instance,
 &ParsedAttrInfoMayAlias::Instance,
 &ParsedAttrInfoMicroMips::Instance,
 &ParsedAttrInfoMinSize::Instance,
@@ -10078,6 +10239,7 @@ static const ParsedAttrInfo *AttrInfoMap[] = {
 &ParsedAttrInfoNoEscape::Instance,
 &ParsedAttrInfoNoInline::Instance,
 &ParsedAttrInfoNoInstrumentFunction::Instance,
+&ParsedAttrInfoNoMerge::Instance,
 &ParsedAttrInfoNoMicroMips::Instance,
 &ParsedAttrInfoNoMips16::Instance,
 &ParsedAttrInfoNoReturn::Instance,
@@ -10271,6 +10433,8 @@ static bool checkAttributeMatchRuleAppliesTo(const Decl *D, attr::SubjectMatchRu
     return isTLSVar(D);
   case attr::SubjectMatchRule_variable_is_global:
     return isGlobalVar(D);
+  case attr::SubjectMatchRule_variable_is_local:
+    return isLocalVar(D);
   case attr::SubjectMatchRule_variable_is_parameter:
     return isa<ParmVarDecl>(D);
   case attr::SubjectMatchRule_variable_not_is_parameter:
