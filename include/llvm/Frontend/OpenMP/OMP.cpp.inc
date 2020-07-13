@@ -1,2258 +1,2808 @@
+#ifdef GEN_FLANG_DIRECTIVE_CLAUSE_SETS
+#undef GEN_FLANG_DIRECTIVE_CLAUSE_SETS
 
-Directive llvm::omp::getOpenMPDirectiveKind(llvm::StringRef Str) {
-  return llvm::StringSwitch<Directive>(Str)
-    .Case("allocate",OMPD_allocate)
-    .Case("atomic",OMPD_atomic)
-    .Case("barrier",OMPD_barrier)
-    .Case("begin declare variant",OMPD_begin_declare_variant)
-    .Case("cancel",OMPD_cancel)
-    .Case("cancellation point",OMPD_cancellation_point)
-    .Case("critical",OMPD_critical)
-    .Case("declare mapper",OMPD_declare_mapper)
-    .Case("declare reduction",OMPD_declare_reduction)
-    .Case("declare simd",OMPD_declare_simd)
-    .Case("declare target",OMPD_declare_target)
-    .Case("declare variant",OMPD_declare_variant)
-    .Case("depobj",OMPD_depobj)
-    .Case("distribute",OMPD_distribute)
-    .Case("distribute parallel do",OMPD_distribute_parallel_do)
-    .Case("distribute parallel do simd",OMPD_distribute_parallel_do_simd)
-    .Case("distribute parallel for",OMPD_distribute_parallel_for)
-    .Case("distribute parallel for simd",OMPD_distribute_parallel_for_simd)
-    .Case("distribute simd",OMPD_distribute_simd)
-    .Case("do",OMPD_do)
-    .Case("do simd",OMPD_do_simd)
-    .Case("end declare target",OMPD_end_declare_target)
-    .Case("end declare variant",OMPD_end_declare_variant)
-    .Case("end do",OMPD_end_do)
-    .Case("end do simd",OMPD_end_do_simd)
-    .Case("end sections",OMPD_end_sections)
-    .Case("end single",OMPD_end_single)
-    .Case("end workshare",OMPD_end_workshare)
-    .Case("flush",OMPD_flush)
-    .Case("for",OMPD_for)
-    .Case("for simd",OMPD_for_simd)
-    .Case("master",OMPD_master)
-    .Case("master taskloop",OMPD_master_taskloop)
-    .Case("master taskloop simd",OMPD_master_taskloop_simd)
-    .Case("ordered",OMPD_ordered)
-    .Case("parallel",OMPD_parallel)
-    .Case("parallel do",OMPD_parallel_do)
-    .Case("parallel do simd",OMPD_parallel_do_simd)
-    .Case("parallel for",OMPD_parallel_for)
-    .Case("parallel for simd",OMPD_parallel_for_simd)
-    .Case("parallel master",OMPD_parallel_master)
-    .Case("parallel master taskloop",OMPD_parallel_master_taskloop)
-    .Case("parallel master taskloop simd",OMPD_parallel_master_taskloop_simd)
-    .Case("parallel sections",OMPD_parallel_sections)
-    .Case("parallel workshare",OMPD_parallel_workshare)
-    .Case("requires",OMPD_requires)
-    .Case("scan",OMPD_scan)
-    .Case("section",OMPD_section)
-    .Case("sections",OMPD_sections)
-    .Case("simd",OMPD_simd)
-    .Case("single",OMPD_single)
-    .Case("target",OMPD_target)
-    .Case("target data",OMPD_target_data)
-    .Case("target enter data",OMPD_target_enter_data)
-    .Case("target exit data",OMPD_target_exit_data)
-    .Case("target parallel",OMPD_target_parallel)
-    .Case("target parallel do",OMPD_target_parallel_do)
-    .Case("target parallel do simd",OMPD_target_parallel_do_simd)
-    .Case("target parallel for",OMPD_target_parallel_for)
-    .Case("target parallel for simd",OMPD_target_parallel_for_simd)
-    .Case("target simd",OMPD_target_simd)
-    .Case("target teams",OMPD_target_teams)
-    .Case("target teams distribute",OMPD_target_teams_distribute)
-    .Case("target teams distribute parallel do",OMPD_target_teams_distribute_parallel_do)
-    .Case("target teams distribute parallel do simd",OMPD_target_teams_distribute_parallel_do_simd)
-    .Case("target teams distribute parallel for",OMPD_target_teams_distribute_parallel_for)
-    .Case("target teams distribute parallel for simd",OMPD_target_teams_distribute_parallel_for_simd)
-    .Case("target teams distribute simd",OMPD_target_teams_distribute_simd)
-    .Case("target update",OMPD_target_update)
-    .Case("task",OMPD_task)
-    .Case("taskgroup",OMPD_taskgroup)
-    .Case("taskloop",OMPD_taskloop)
-    .Case("taskloop simd",OMPD_taskloop_simd)
-    .Case("taskwait",OMPD_taskwait)
-    .Case("taskyield",OMPD_taskyield)
-    .Case("teams",OMPD_teams)
-    .Case("teams distribute",OMPD_teams_distribute)
-    .Case("teams distribute parallel do",OMPD_teams_distribute_parallel_do)
-    .Case("teams distribute parallel do simd",OMPD_teams_distribute_parallel_do_simd)
-    .Case("teams distribute parallel for",OMPD_teams_distribute_parallel_for)
-    .Case("teams distribute parallel for simd",OMPD_teams_distribute_parallel_for_simd)
-    .Case("teams distribute simd",OMPD_teams_distribute_simd)
-    .Case("threadprivate",OMPD_threadprivate)
-    .Case("unknown",OMPD_unknown)
-    .Case("workshare",OMPD_workshare)
-    .Default(OMPD_unknown);
-}
+namespace llvm {
+namespace omp {
 
-llvm::StringRef llvm::omp::getOpenMPDirectiveName(Directive Kind) {
-  switch (Kind) {
-    case OMPD_allocate:
-      return "allocate";
-    case OMPD_atomic:
-      return "atomic";
-    case OMPD_barrier:
-      return "barrier";
-    case OMPD_begin_declare_variant:
-      return "begin declare variant";
-    case OMPD_cancel:
-      return "cancel";
-    case OMPD_cancellation_point:
-      return "cancellation point";
-    case OMPD_critical:
-      return "critical";
-    case OMPD_declare_mapper:
-      return "declare mapper";
-    case OMPD_declare_reduction:
-      return "declare reduction";
-    case OMPD_declare_simd:
-      return "declare simd";
-    case OMPD_declare_target:
-      return "declare target";
-    case OMPD_declare_variant:
-      return "declare variant";
-    case OMPD_depobj:
-      return "depobj";
-    case OMPD_distribute:
-      return "distribute";
-    case OMPD_distribute_parallel_do:
-      return "distribute parallel do";
-    case OMPD_distribute_parallel_do_simd:
-      return "distribute parallel do simd";
-    case OMPD_distribute_parallel_for:
-      return "distribute parallel for";
-    case OMPD_distribute_parallel_for_simd:
-      return "distribute parallel for simd";
-    case OMPD_distribute_simd:
-      return "distribute simd";
-    case OMPD_do:
-      return "do";
-    case OMPD_do_simd:
-      return "do simd";
-    case OMPD_end_declare_target:
-      return "end declare target";
-    case OMPD_end_declare_variant:
-      return "end declare variant";
-    case OMPD_end_do:
-      return "end do";
-    case OMPD_end_do_simd:
-      return "end do simd";
-    case OMPD_end_sections:
-      return "end sections";
-    case OMPD_end_single:
-      return "end single";
-    case OMPD_end_workshare:
-      return "end workshare";
-    case OMPD_flush:
-      return "flush";
-    case OMPD_for:
-      return "for";
-    case OMPD_for_simd:
-      return "for simd";
-    case OMPD_master:
-      return "master";
-    case OMPD_master_taskloop:
-      return "master taskloop";
-    case OMPD_master_taskloop_simd:
-      return "master taskloop simd";
-    case OMPD_ordered:
-      return "ordered";
-    case OMPD_parallel:
-      return "parallel";
-    case OMPD_parallel_do:
-      return "parallel do";
-    case OMPD_parallel_do_simd:
-      return "parallel do simd";
-    case OMPD_parallel_for:
-      return "parallel for";
-    case OMPD_parallel_for_simd:
-      return "parallel for simd";
-    case OMPD_parallel_master:
-      return "parallel master";
-    case OMPD_parallel_master_taskloop:
-      return "parallel master taskloop";
-    case OMPD_parallel_master_taskloop_simd:
-      return "parallel master taskloop simd";
-    case OMPD_parallel_sections:
-      return "parallel sections";
-    case OMPD_parallel_workshare:
-      return "parallel workshare";
-    case OMPD_requires:
-      return "requires";
-    case OMPD_scan:
-      return "scan";
-    case OMPD_section:
-      return "section";
-    case OMPD_sections:
-      return "sections";
-    case OMPD_simd:
-      return "simd";
-    case OMPD_single:
-      return "single";
-    case OMPD_target:
-      return "target";
-    case OMPD_target_data:
-      return "target data";
-    case OMPD_target_enter_data:
-      return "target enter data";
-    case OMPD_target_exit_data:
-      return "target exit data";
-    case OMPD_target_parallel:
-      return "target parallel";
-    case OMPD_target_parallel_do:
-      return "target parallel do";
-    case OMPD_target_parallel_do_simd:
-      return "target parallel do simd";
-    case OMPD_target_parallel_for:
-      return "target parallel for";
-    case OMPD_target_parallel_for_simd:
-      return "target parallel for simd";
-    case OMPD_target_simd:
-      return "target simd";
-    case OMPD_target_teams:
-      return "target teams";
-    case OMPD_target_teams_distribute:
-      return "target teams distribute";
-    case OMPD_target_teams_distribute_parallel_do:
-      return "target teams distribute parallel do";
-    case OMPD_target_teams_distribute_parallel_do_simd:
-      return "target teams distribute parallel do simd";
-    case OMPD_target_teams_distribute_parallel_for:
-      return "target teams distribute parallel for";
-    case OMPD_target_teams_distribute_parallel_for_simd:
-      return "target teams distribute parallel for simd";
-    case OMPD_target_teams_distribute_simd:
-      return "target teams distribute simd";
-    case OMPD_target_update:
-      return "target update";
-    case OMPD_task:
-      return "task";
-    case OMPD_taskgroup:
-      return "taskgroup";
-    case OMPD_taskloop:
-      return "taskloop";
-    case OMPD_taskloop_simd:
-      return "taskloop simd";
-    case OMPD_taskwait:
-      return "taskwait";
-    case OMPD_taskyield:
-      return "taskyield";
-    case OMPD_teams:
-      return "teams";
-    case OMPD_teams_distribute:
-      return "teams distribute";
-    case OMPD_teams_distribute_parallel_do:
-      return "teams distribute parallel do";
-    case OMPD_teams_distribute_parallel_do_simd:
-      return "teams distribute parallel do simd";
-    case OMPD_teams_distribute_parallel_for:
-      return "teams distribute parallel for";
-    case OMPD_teams_distribute_parallel_for_simd:
-      return "teams distribute parallel for simd";
-    case OMPD_teams_distribute_simd:
-      return "teams distribute simd";
-    case OMPD_threadprivate:
-      return "threadprivate";
-    case OMPD_unknown:
-      return "unknown";
-    case OMPD_workshare:
-      return "workshare";
-  }
-  llvm_unreachable("Invalid OpenMP Directive kind");
-}
+  // Sets for allocate
 
-Clause llvm::omp::getOpenMPClauseKind(llvm::StringRef Str) {
-  return llvm::StringSwitch<Clause>(Str)
-    .Case("acq_rel",OMPC_acq_rel)
-    .Case("acquire",OMPC_acquire)
-    .Case("affinity",OMPC_affinity)
-    .Case("aligned",OMPC_aligned)
-    .Case("allocate",OMPC_allocate)
-    .Case("allocator",OMPC_allocator)
-    .Case("atomic_default_mem_order",OMPC_atomic_default_mem_order)
-    .Case("capture",OMPC_capture)
-    .Case("collapse",OMPC_collapse)
-    .Case("copyprivate",OMPC_copyprivate)
-    .Case("copyin",OMPC_copyin)
-    .Case("default",OMPC_default)
-    .Case("defaultmap",OMPC_defaultmap)
-    .Case("depend",OMPC_depend)
-    .Case("depobj",OMPC_unknown)
-    .Case("destroy",OMPC_destroy)
-    .Case("detach",OMPC_detach)
-    .Case("device",OMPC_device)
-    .Case("device_type",OMPC_device_type)
-    .Case("dist_schedule",OMPC_dist_schedule)
-    .Case("dynamic_allocators",OMPC_dynamic_allocators)
-    .Case("exclusive",OMPC_exclusive)
-    .Case("final",OMPC_final)
-    .Case("firstprivate",OMPC_firstprivate)
-    .Case("flush",OMPC_unknown)
-    .Case("from",OMPC_from)
-    .Case("grainsize",OMPC_grainsize)
-    .Case("hint",OMPC_hint)
-    .Case("if",OMPC_if)
-    .Case("in_reduction",OMPC_in_reduction)
-    .Case("inbranch",OMPC_inbranch)
-    .Case("inclusive",OMPC_inclusive)
-    .Case("is_device_ptr",OMPC_is_device_ptr)
-    .Case("lastprivate",OMPC_lastprivate)
-    .Case("linear",OMPC_linear)
-    .Case("link",OMPC_link)
-    .Case("map",OMPC_map)
-    .Case("match",OMPC_match)
-    .Case("mergeable",OMPC_mergeable)
-    .Case("nogroup",OMPC_nogroup)
-    .Case("nowait",OMPC_nowait)
-    .Case("nontemporal",OMPC_nontemporal)
-    .Case("notinbranch",OMPC_notinbranch)
-    .Case("num_tasks",OMPC_num_tasks)
-    .Case("num_teams",OMPC_num_teams)
-    .Case("num_threads",OMPC_num_threads)
-    .Case("order",OMPC_order)
-    .Case("ordered",OMPC_ordered)
-    .Case("priority",OMPC_priority)
-    .Case("private",OMPC_private)
-    .Case("proc_bind",OMPC_proc_bind)
-    .Case("read",OMPC_read)
-    .Case("reduction",OMPC_reduction)
-    .Case("relaxed",OMPC_relaxed)
-    .Case("release",OMPC_release)
-    .Case("reverse_offload",OMPC_reverse_offload)
-    .Case("safelen",OMPC_safelen)
-    .Case("schedule",OMPC_schedule)
-    .Case("seq_cst",OMPC_seq_cst)
-    .Case("shared",OMPC_shared)
-    .Case("simd",OMPC_simd)
-    .Case("simdlen",OMPC_simdlen)
-    .Case("task_reduction",OMPC_task_reduction)
-    .Case("thread_limit",OMPC_thread_limit)
-    .Case("threadprivate",OMPC_unknown)
-    .Case("threads",OMPC_threads)
-    .Case("to",OMPC_to)
-    .Case("unified_address",OMPC_unified_address)
-    .Case("unified_shared_memory",OMPC_unified_shared_memory)
-    .Case("uniform",OMPC_uniform)
-    .Case("unknown",OMPC_unknown)
-    .Case("untied",OMPC_untied)
-    .Case("update",OMPC_update)
-    .Case("use_device_addr",OMPC_use_device_addr)
-    .Case("use_device_ptr",OMPC_use_device_ptr)
-    .Case("uses_allocators",OMPC_uses_allocators)
-    .Case("write",OMPC_write)
-    .Default(OMPC_unknown);
-}
+  static OmpClauseSet allowedClauses_OMPD_allocate {
+    llvm::omp::Clause::OMPC_allocator,
+  };
 
-llvm::StringRef llvm::omp::getOpenMPClauseName(Clause Kind) {
-  switch (Kind) {
-    case OMPC_acq_rel:
-      return "acq_rel";
-    case OMPC_acquire:
-      return "acquire";
-    case OMPC_affinity:
-      return "affinity";
-    case OMPC_aligned:
-      return "aligned";
-    case OMPC_allocate:
-      return "allocate";
-    case OMPC_allocator:
-      return "allocator";
-    case OMPC_atomic_default_mem_order:
-      return "atomic_default_mem_order";
-    case OMPC_capture:
-      return "capture";
-    case OMPC_collapse:
-      return "collapse";
-    case OMPC_copyprivate:
-      return "copyprivate";
-    case OMPC_copyin:
-      return "copyin";
-    case OMPC_default:
-      return "default";
-    case OMPC_defaultmap:
-      return "defaultmap";
-    case OMPC_depend:
-      return "depend";
-    case OMPC_depobj:
-      return "depobj";
-    case OMPC_destroy:
-      return "destroy";
-    case OMPC_detach:
-      return "detach";
-    case OMPC_device:
-      return "device";
-    case OMPC_device_type:
-      return "device_type";
-    case OMPC_dist_schedule:
-      return "dist_schedule";
-    case OMPC_dynamic_allocators:
-      return "dynamic_allocators";
-    case OMPC_exclusive:
-      return "exclusive";
-    case OMPC_final:
-      return "final";
-    case OMPC_firstprivate:
-      return "firstprivate";
-    case OMPC_flush:
-      return "flush";
-    case OMPC_from:
-      return "from";
-    case OMPC_grainsize:
-      return "grainsize";
-    case OMPC_hint:
-      return "hint";
-    case OMPC_if:
-      return "if";
-    case OMPC_in_reduction:
-      return "in_reduction";
-    case OMPC_inbranch:
-      return "inbranch";
-    case OMPC_inclusive:
-      return "inclusive";
-    case OMPC_is_device_ptr:
-      return "is_device_ptr";
-    case OMPC_lastprivate:
-      return "lastprivate";
-    case OMPC_linear:
-      return "linear";
-    case OMPC_link:
-      return "link";
-    case OMPC_map:
-      return "map";
-    case OMPC_match:
-      return "match";
-    case OMPC_mergeable:
-      return "mergeable";
-    case OMPC_nogroup:
-      return "nogroup";
-    case OMPC_nowait:
-      return "nowait";
-    case OMPC_nontemporal:
-      return "nontemporal";
-    case OMPC_notinbranch:
-      return "notinbranch";
-    case OMPC_num_tasks:
-      return "num_tasks";
-    case OMPC_num_teams:
-      return "num_teams";
-    case OMPC_num_threads:
-      return "num_threads";
-    case OMPC_order:
-      return "order";
-    case OMPC_ordered:
-      return "ordered";
-    case OMPC_priority:
-      return "priority";
-    case OMPC_private:
-      return "private";
-    case OMPC_proc_bind:
-      return "proc_bind";
-    case OMPC_read:
-      return "read";
-    case OMPC_reduction:
-      return "reduction";
-    case OMPC_relaxed:
-      return "relaxed";
-    case OMPC_release:
-      return "release";
-    case OMPC_reverse_offload:
-      return "reverse_offload";
-    case OMPC_safelen:
-      return "safelen";
-    case OMPC_schedule:
-      return "schedule";
-    case OMPC_seq_cst:
-      return "seq_cst";
-    case OMPC_shared:
-      return "shared";
-    case OMPC_simd:
-      return "simd";
-    case OMPC_simdlen:
-      return "simdlen";
-    case OMPC_task_reduction:
-      return "task_reduction";
-    case OMPC_thread_limit:
-      return "thread_limit";
-    case OMPC_threadprivate:
-      return "threadprivate or thread local";
-    case OMPC_threads:
-      return "threads";
-    case OMPC_to:
-      return "to";
-    case OMPC_unified_address:
-      return "unified_address";
-    case OMPC_unified_shared_memory:
-      return "unified_shared_memory";
-    case OMPC_uniform:
-      return "uniform";
-    case OMPC_unknown:
-      return "unknown";
-    case OMPC_untied:
-      return "untied";
-    case OMPC_update:
-      return "update";
-    case OMPC_use_device_addr:
-      return "use_device_addr";
-    case OMPC_use_device_ptr:
-      return "use_device_ptr";
-    case OMPC_uses_allocators:
-      return "uses_allocators";
-    case OMPC_write:
-      return "write";
-  }
-  llvm_unreachable("Invalid OpenMP Clause kind");
-}
+  static OmpClauseSet allowedOnceClauses_OMPD_allocate {
+  };
 
-bool llvm::omp::isAllowedClauseForDirective(Directive D, Clause C, unsigned Version) {
-  assert(unsigned(D) <= llvm::omp::Directive_enumSize);
-  assert(unsigned(C) <= llvm::omp::Clause_enumSize);
-  if (D == OMPD_allocate && C == OMPC_allocator && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_read && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_write && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_update && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_capture && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_seq_cst && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_acq_rel && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_acquire && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_release && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_relaxed && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_atomic && C == OMPC_hint && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_cancel && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_critical && C == OMPC_hint && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_declare_mapper && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_declare_variant && C == OMPC_match && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_depobj && C == OMPC_depend && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_depobj && C == OMPC_destroy && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_depobj && C == OMPC_update && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_depobj && C == OMPC_depobj && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_nontemporal && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_do_simd && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_parallel_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_if && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_distribute_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_flush && C == OMPC_acq_rel && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_flush && C == OMPC_acquire && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_flush && C == OMPC_release && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_flush && C == OMPC_flush && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_if && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_in_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_in_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_master_taskloop_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_ordered && C == OMPC_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_ordered && C == OMPC_simd && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_ordered && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_nontemporal && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_do_simd && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_master_taskloop_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_parallel_sections && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_requires && C == OMPC_unified_address && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_requires && C == OMPC_unified_shared_memory && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_requires && C == OMPC_reverse_offload && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_requires && C == OMPC_dynamic_allocators && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_requires && C == OMPC_atomic_default_mem_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_scan && C == OMPC_inclusive && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_scan && C == OMPC_exclusive && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_sections && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_if && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_single && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_single && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_single && C == OMPC_copyprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_single && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_single && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_data && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_data && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_data && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_data && C == OMPC_use_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_data && C == OMPC_use_device_addr && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_enter_data && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_enter_data && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_enter_data && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_enter_data && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_enter_data && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_exit_data && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_exit_data && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_exit_data && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_exit_data && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_exit_data && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_allocator && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do && C == OMPC_uses_allocators && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_nontemporal && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_do_simd && C == OMPC_uses_allocators && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_ordered && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_parallel_for_simd && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_simd && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do && C == OMPC_uses_allocators && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_nontemporal && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_do_simd && C == OMPC_uses_allocators && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_parallel_for_simd && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_map && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_defaultmap && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_is_device_ptr && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_teams_distribute_simd && C == OMPC_uses_allocators && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_device && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_to && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_from && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_nowait && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_target_update && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_depend && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_in_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_detach && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_task && C == OMPC_affinity && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskgroup && C == OMPC_task_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskgroup && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_in_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_final && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_untied && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_mergeable && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_priority && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_grainsize && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_nogroup && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_num_tasks && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_in_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_taskloop_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_nontemporal && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_do_simd && C == OMPC_order && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_copyin && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_if && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_num_threads && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_proc_bind && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_parallel_for_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_default && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_private && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_firstprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_shared && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_reduction && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_num_teams && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_thread_limit && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_lastprivate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_collapse && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_dist_schedule && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_linear && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_aligned && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_safelen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_simdlen && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_allocate && 1 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_if && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_nontemporal && 50 <= Version && 2147483647 >= Version)
-    return true;
-  if (D == OMPD_teams_distribute_simd && C == OMPC_order && 50 <= Version && 2147483647 >= Version)
-    return true;
-  return false;
-}
+  static OmpClauseSet allowedExclusiveClauses_OMPD_allocate {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_allocate {
+  };
+
+  // Sets for atomic
+
+  static OmpClauseSet allowedClauses_OMPD_atomic {
+    llvm::omp::Clause::OMPC_read,
+    llvm::omp::Clause::OMPC_write,
+    llvm::omp::Clause::OMPC_update,
+    llvm::omp::Clause::OMPC_capture,
+    llvm::omp::Clause::OMPC_seq_cst,
+    llvm::omp::Clause::OMPC_acq_rel,
+    llvm::omp::Clause::OMPC_acquire,
+    llvm::omp::Clause::OMPC_release,
+    llvm::omp::Clause::OMPC_relaxed,
+    llvm::omp::Clause::OMPC_hint,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_atomic {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_atomic {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_atomic {
+  };
+
+  // Sets for barrier
+
+  static OmpClauseSet allowedClauses_OMPD_barrier {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_barrier {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_barrier {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_barrier {
+  };
+
+  // Sets for begin declare variant
+
+  static OmpClauseSet allowedClauses_OMPD_begin_declare_variant {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_begin_declare_variant {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_begin_declare_variant {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_begin_declare_variant {
+  };
+
+  // Sets for cancel
+
+  static OmpClauseSet allowedClauses_OMPD_cancel {
+    llvm::omp::Clause::OMPC_if,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_cancel {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_cancel {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_cancel {
+  };
+
+  // Sets for cancellation point
+
+  static OmpClauseSet allowedClauses_OMPD_cancellation_point {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_cancellation_point {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_cancellation_point {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_cancellation_point {
+  };
+
+  // Sets for critical
+
+  static OmpClauseSet allowedClauses_OMPD_critical {
+    llvm::omp::Clause::OMPC_hint,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_critical {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_critical {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_critical {
+  };
+
+  // Sets for declare mapper
+
+  static OmpClauseSet allowedClauses_OMPD_declare_mapper {
+    llvm::omp::Clause::OMPC_map,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_declare_mapper {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_declare_mapper {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_declare_mapper {
+  };
+
+  // Sets for declare reduction
+
+  static OmpClauseSet allowedClauses_OMPD_declare_reduction {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_declare_reduction {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_declare_reduction {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_declare_reduction {
+  };
+
+  // Sets for declare simd
+
+  static OmpClauseSet allowedClauses_OMPD_declare_simd {
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_uniform,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_declare_simd {
+    llvm::omp::Clause::OMPC_simdlen,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_declare_simd {
+    llvm::omp::Clause::OMPC_inbranch,
+    llvm::omp::Clause::OMPC_notinbranch,
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_declare_simd {
+  };
+
+  // Sets for declare target
+
+  static OmpClauseSet allowedClauses_OMPD_declare_target {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_declare_target {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_declare_target {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_declare_target {
+  };
+
+  // Sets for declare variant
+
+  static OmpClauseSet allowedClauses_OMPD_declare_variant {
+    llvm::omp::Clause::OMPC_match,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_declare_variant {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_declare_variant {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_declare_variant {
+  };
+
+  // Sets for depobj
+
+  static OmpClauseSet allowedClauses_OMPD_depobj {
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_destroy,
+    llvm::omp::Clause::OMPC_update,
+    llvm::omp::Clause::OMPC_depobj,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_depobj {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_depobj {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_depobj {
+  };
+
+  // Sets for distribute
+
+  static OmpClauseSet allowedClauses_OMPD_distribute {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute {
+  };
+
+  // Sets for distribute parallel do
+
+  static OmpClauseSet allowedClauses_OMPD_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_linear,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute_parallel_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute_parallel_do {
+  };
+
+  // Sets for distribute parallel do simd
+
+  static OmpClauseSet allowedClauses_OMPD_distribute_parallel_do_simd {
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute_parallel_do_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute_parallel_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute_parallel_do_simd {
+  };
+
+  // Sets for distribute parallel for
+
+  static OmpClauseSet allowedClauses_OMPD_distribute_parallel_for {
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute_parallel_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute_parallel_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute_parallel_for {
+  };
+
+  // Sets for distribute parallel for simd
+
+  static OmpClauseSet allowedClauses_OMPD_distribute_parallel_for_simd {
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute_parallel_for_simd {
+  };
+
+  // Sets for distribute simd
+
+  static OmpClauseSet allowedClauses_OMPD_distribute_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_distribute_simd {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_distribute_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_distribute_simd {
+  };
+
+  // Sets for do
+
+  static OmpClauseSet allowedClauses_OMPD_do {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_reduction,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_do {
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_do {
+  };
+
+  // Sets for do simd
+
+  static OmpClauseSet allowedClauses_OMPD_do_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_reduction,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_do_simd {
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_do_simd {
+  };
+
+  // Sets for end declare target
+
+  static OmpClauseSet allowedClauses_OMPD_end_declare_target {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_declare_target {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_declare_target {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_declare_target {
+  };
+
+  // Sets for end declare variant
+
+  static OmpClauseSet allowedClauses_OMPD_end_declare_variant {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_declare_variant {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_declare_variant {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_declare_variant {
+  };
+
+  // Sets for end do
+
+  static OmpClauseSet allowedClauses_OMPD_end_do {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_do {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_do {
+  };
+
+  // Sets for end do simd
+
+  static OmpClauseSet allowedClauses_OMPD_end_do_simd {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_do_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_do_simd {
+  };
+
+  // Sets for end sections
+
+  static OmpClauseSet allowedClauses_OMPD_end_sections {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_sections {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_sections {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_sections {
+  };
+
+  // Sets for end single
+
+  static OmpClauseSet allowedClauses_OMPD_end_single {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_single {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_single {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_single {
+  };
+
+  // Sets for end workshare
+
+  static OmpClauseSet allowedClauses_OMPD_end_workshare {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_end_workshare {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_end_workshare {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_end_workshare {
+  };
+
+  // Sets for flush
+
+  static OmpClauseSet allowedClauses_OMPD_flush {
+    llvm::omp::Clause::OMPC_acq_rel,
+    llvm::omp::Clause::OMPC_acquire,
+    llvm::omp::Clause::OMPC_release,
+    llvm::omp::Clause::OMPC_flush,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_flush {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_flush {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_flush {
+  };
+
+  // Sets for for
+
+  static OmpClauseSet allowedClauses_OMPD_for {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_for {
+  };
+
+  // Sets for for simd
+
+  static OmpClauseSet allowedClauses_OMPD_for_simd {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_for_simd {
+  };
+
+  // Sets for master
+
+  static OmpClauseSet allowedClauses_OMPD_master {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_master {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_master {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_master {
+  };
+
+  // Sets for master taskloop
+
+  static OmpClauseSet allowedClauses_OMPD_master_taskloop {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_priority,
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_num_tasks,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_in_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_master_taskloop {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_master_taskloop {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_master_taskloop {
+  };
+
+  // Sets for master taskloop simd
+
+  static OmpClauseSet allowedClauses_OMPD_master_taskloop_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_priority,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_num_tasks,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_in_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_master_taskloop_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_master_taskloop_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_master_taskloop_simd {
+  };
+
+  // Sets for ordered
+
+  static OmpClauseSet allowedClauses_OMPD_ordered {
+    llvm::omp::Clause::OMPC_threads,
+    llvm::omp::Clause::OMPC_simd,
+    llvm::omp::Clause::OMPC_depend,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_ordered {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_ordered {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_ordered {
+  };
+
+  // Sets for parallel
+
+  static OmpClauseSet allowedClauses_OMPD_parallel {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel {
+  };
+
+  // Sets for parallel do
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_do {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_do {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_collapse,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_do {
+  };
+
+  // Sets for parallel do simd
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_do_simd {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_do_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_do_simd {
+  };
+
+  // Sets for parallel for
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_for {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_for {
+  };
+
+  // Sets for parallel for simd
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_for_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_for_simd {
+  };
+
+  // Sets for parallel master
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_master {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_master {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_master {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_master {
+  };
+
+  // Sets for parallel master taskloop
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_master_taskloop {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_priority,
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_num_tasks,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_copyin,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_master_taskloop {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_master_taskloop {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_master_taskloop {
+  };
+
+  // Sets for parallel master taskloop simd
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_master_taskloop_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_priority,
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_num_tasks,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_master_taskloop_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_master_taskloop_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_master_taskloop_simd {
+  };
+
+  // Sets for parallel sections
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_sections {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_sections {
+    llvm::omp::Clause::OMPC_num_threads,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_sections {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_sections {
+  };
+
+  // Sets for parallel workshare
+
+  static OmpClauseSet allowedClauses_OMPD_parallel_workshare {
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_shared,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_parallel_workshare {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_parallel_workshare {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_parallel_workshare {
+  };
+
+  // Sets for requires
+
+  static OmpClauseSet allowedClauses_OMPD_requires {
+    llvm::omp::Clause::OMPC_unified_address,
+    llvm::omp::Clause::OMPC_unified_shared_memory,
+    llvm::omp::Clause::OMPC_reverse_offload,
+    llvm::omp::Clause::OMPC_dynamic_allocators,
+    llvm::omp::Clause::OMPC_atomic_default_mem_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_requires {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_requires {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_requires {
+  };
+
+  // Sets for scan
+
+  static OmpClauseSet allowedClauses_OMPD_scan {
+    llvm::omp::Clause::OMPC_inclusive,
+    llvm::omp::Clause::OMPC_exclusive,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_scan {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_scan {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_scan {
+  };
+
+  // Sets for section
+
+  static OmpClauseSet allowedClauses_OMPD_section {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_section {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_section {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_section {
+  };
+
+  // Sets for sections
+
+  static OmpClauseSet allowedClauses_OMPD_sections {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_sections {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_sections {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_sections {
+  };
+
+  // Sets for simd
+
+  static OmpClauseSet allowedClauses_OMPD_simd {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_simd {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_if,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_simd {
+  };
+
+  // Sets for single
+
+  static OmpClauseSet allowedClauses_OMPD_single {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_copyprivate,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_single {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_single {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_single {
+  };
+
+  // Sets for target
+
+  static OmpClauseSet allowedClauses_OMPD_target {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target {
+  };
+
+  // Sets for target data
+
+  static OmpClauseSet allowedClauses_OMPD_target_data {
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_use_device_ptr,
+    llvm::omp::Clause::OMPC_use_device_addr,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_data {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_if,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_data {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_data {
+    llvm::omp::Clause::OMPC_map,
+  };
+
+  // Sets for target enter data
+
+  static OmpClauseSet allowedClauses_OMPD_target_enter_data {
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_map,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_enter_data {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_enter_data {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_enter_data {
+  };
+
+  // Sets for target exit data
+
+  static OmpClauseSet allowedClauses_OMPD_target_exit_data {
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_map,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_exit_data {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_exit_data {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_exit_data {
+    llvm::omp::Clause::OMPC_map,
+  };
+
+  // Sets for target parallel
+
+  static OmpClauseSet allowedClauses_OMPD_target_parallel {
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_parallel {
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_parallel {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_parallel {
+  };
+
+  // Sets for target parallel do
+
+  static OmpClauseSet allowedClauses_OMPD_target_parallel_do {
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_allocator,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_copyin,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_parallel_do {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_nowait,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_parallel_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_parallel_do {
+  };
+
+  // Sets for target parallel do simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_parallel_do_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_parallel_do_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_parallel_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_parallel_do_simd {
+  };
+
+  // Sets for target parallel for
+
+  static OmpClauseSet allowedClauses_OMPD_target_parallel_for {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_parallel_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_parallel_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_parallel_for {
+  };
+
+  // Sets for target parallel for simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_parallel_for_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_parallel_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_parallel_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_parallel_for_simd {
+  };
+
+  // Sets for target simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_simd {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_schedule,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_simd {
+  };
+
+  // Sets for target teams
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+    llvm::omp::Clause::OMPC_shared,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams {
+  };
+
+  // Sets for target teams distribute
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_lastprivate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute {
+  };
+
+  // Sets for target teams distribute parallel do
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute_parallel_do {
+  };
+
+  // Sets for target teams distribute parallel do simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute_parallel_do_simd {
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_uses_allocators,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_nontemporal,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute_parallel_do_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute_parallel_do_simd {
+  };
+
+  // Sets for target teams distribute parallel for
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute_parallel_for {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute_parallel_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute_parallel_for {
+  };
+
+  // Sets for target teams distribute parallel for simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute_parallel_for_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute_parallel_for_simd {
+  };
+
+  // Sets for target teams distribute simd
+
+  static OmpClauseSet allowedClauses_OMPD_target_teams_distribute_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_is_device_ptr,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_map,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_uses_allocators,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_teams_distribute_simd {
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_defaultmap,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_teams_distribute_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_teams_distribute_simd {
+  };
+
+  // Sets for target update
+
+  static OmpClauseSet allowedClauses_OMPD_target_update {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_device,
+    llvm::omp::Clause::OMPC_to,
+    llvm::omp::Clause::OMPC_from,
+    llvm::omp::Clause::OMPC_nowait,
+    llvm::omp::Clause::OMPC_depend,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_target_update {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_target_update {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_target_update {
+  };
+
+  // Sets for task
+
+  static OmpClauseSet allowedClauses_OMPD_task {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_depend,
+    llvm::omp::Clause::OMPC_in_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_detach,
+    llvm::omp::Clause::OMPC_affinity,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_task {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_priority,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_task {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_task {
+  };
+
+  // Sets for taskgroup
+
+  static OmpClauseSet allowedClauses_OMPD_taskgroup {
+    llvm::omp::Clause::OMPC_task_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_taskgroup {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_taskgroup {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_taskgroup {
+  };
+
+  // Sets for taskloop
+
+  static OmpClauseSet allowedClauses_OMPD_taskloop {
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_untied,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_in_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_taskloop {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_priority,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_taskloop {
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_num_tasks,
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_taskloop {
+  };
+
+  // Sets for taskloop simd
+
+  static OmpClauseSet allowedClauses_OMPD_taskloop_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_in_reduction,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_mergeable,
+    llvm::omp::Clause::OMPC_nogroup,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_untied,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_taskloop_simd {
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_final,
+    llvm::omp::Clause::OMPC_priority,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_taskloop_simd {
+    llvm::omp::Clause::OMPC_grainsize,
+    llvm::omp::Clause::OMPC_num_tasks,
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_taskloop_simd {
+  };
+
+  // Sets for taskwait
+
+  static OmpClauseSet allowedClauses_OMPD_taskwait {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_taskwait {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_taskwait {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_taskwait {
+  };
+
+  // Sets for taskyield
+
+  static OmpClauseSet allowedClauses_OMPD_taskyield {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_taskyield {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_taskyield {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_taskyield {
+  };
+
+  // Sets for teams
+
+  static OmpClauseSet allowedClauses_OMPD_teams {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams {
+  };
+
+  // Sets for teams distribute
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_allocate,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute {
+  };
+
+  // Sets for teams distribute parallel do
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_linear,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute_parallel_do {
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_ordered,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute_parallel_do {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute_parallel_do {
+  };
+
+  // Sets for teams distribute parallel do simd
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute_parallel_do_simd {
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_nontemporal,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute_parallel_do_simd {
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_if,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute_parallel_do_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute_parallel_do_simd {
+  };
+
+  // Sets for teams distribute parallel for
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute_parallel_for {
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_copyin,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute_parallel_for {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute_parallel_for {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute_parallel_for {
+  };
+
+  // Sets for teams distribute parallel for simd
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute_parallel_for_simd {
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_threads,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_proc_bind,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_shared,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_schedule,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_thread_limit,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute_parallel_for_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute_parallel_for_simd {
+  };
+
+  // Sets for teams distribute simd
+
+  static OmpClauseSet allowedClauses_OMPD_teams_distribute_simd {
+    llvm::omp::Clause::OMPC_aligned,
+    llvm::omp::Clause::OMPC_allocate,
+    llvm::omp::Clause::OMPC_firstprivate,
+    llvm::omp::Clause::OMPC_lastprivate,
+    llvm::omp::Clause::OMPC_linear,
+    llvm::omp::Clause::OMPC_nontemporal,
+    llvm::omp::Clause::OMPC_order,
+    llvm::omp::Clause::OMPC_private,
+    llvm::omp::Clause::OMPC_reduction,
+    llvm::omp::Clause::OMPC_shared,
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_teams_distribute_simd {
+    llvm::omp::Clause::OMPC_collapse,
+    llvm::omp::Clause::OMPC_default,
+    llvm::omp::Clause::OMPC_dist_schedule,
+    llvm::omp::Clause::OMPC_if,
+    llvm::omp::Clause::OMPC_num_teams,
+    llvm::omp::Clause::OMPC_safelen,
+    llvm::omp::Clause::OMPC_simdlen,
+    llvm::omp::Clause::OMPC_thread_limit,
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_teams_distribute_simd {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_teams_distribute_simd {
+  };
+
+  // Sets for threadprivate
+
+  static OmpClauseSet allowedClauses_OMPD_threadprivate {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_threadprivate {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_threadprivate {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_threadprivate {
+  };
+
+  // Sets for unknown
+
+  static OmpClauseSet allowedClauses_OMPD_unknown {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_unknown {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_unknown {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_unknown {
+  };
+
+  // Sets for workshare
+
+  static OmpClauseSet allowedClauses_OMPD_workshare {
+  };
+
+  static OmpClauseSet allowedOnceClauses_OMPD_workshare {
+  };
+
+  static OmpClauseSet allowedExclusiveClauses_OMPD_workshare {
+  };
+
+  static OmpClauseSet requiredClauses_OMPD_workshare {
+  };
+} // namespace omp
+} // namespace llvm
+
+#endif // GEN_FLANG_DIRECTIVE_CLAUSE_SETS
+
+#ifdef GEN_FLANG_DIRECTIVE_CLAUSE_MAP
+#undef GEN_FLANG_DIRECTIVE_CLAUSE_MAP
+
+struct OpenMPDirectiveClauses {
+  const OmpClauseSet allowed;
+  const OmpClauseSet allowedOnce;
+  const OmpClauseSet allowedExclusive;
+  const OmpClauseSet requiredOneOf;
+};
+
+std::unordered_map<llvm::omp::Directive, OpenMPDirectiveClauses>
+    directiveClausesTable = {
+  {llvm::omp::Directive::OMPD_allocate,
+    {
+      llvm::omp::allowedClauses_OMPD_allocate,
+      llvm::omp::allowedOnceClauses_OMPD_allocate,
+      llvm::omp::allowedExclusiveClauses_OMPD_allocate,
+      llvm::omp::requiredClauses_OMPD_allocate,
+    }
+  },
+  {llvm::omp::Directive::OMPD_atomic,
+    {
+      llvm::omp::allowedClauses_OMPD_atomic,
+      llvm::omp::allowedOnceClauses_OMPD_atomic,
+      llvm::omp::allowedExclusiveClauses_OMPD_atomic,
+      llvm::omp::requiredClauses_OMPD_atomic,
+    }
+  },
+  {llvm::omp::Directive::OMPD_barrier,
+    {
+      llvm::omp::allowedClauses_OMPD_barrier,
+      llvm::omp::allowedOnceClauses_OMPD_barrier,
+      llvm::omp::allowedExclusiveClauses_OMPD_barrier,
+      llvm::omp::requiredClauses_OMPD_barrier,
+    }
+  },
+  {llvm::omp::Directive::OMPD_begin_declare_variant,
+    {
+      llvm::omp::allowedClauses_OMPD_begin_declare_variant,
+      llvm::omp::allowedOnceClauses_OMPD_begin_declare_variant,
+      llvm::omp::allowedExclusiveClauses_OMPD_begin_declare_variant,
+      llvm::omp::requiredClauses_OMPD_begin_declare_variant,
+    }
+  },
+  {llvm::omp::Directive::OMPD_cancel,
+    {
+      llvm::omp::allowedClauses_OMPD_cancel,
+      llvm::omp::allowedOnceClauses_OMPD_cancel,
+      llvm::omp::allowedExclusiveClauses_OMPD_cancel,
+      llvm::omp::requiredClauses_OMPD_cancel,
+    }
+  },
+  {llvm::omp::Directive::OMPD_cancellation_point,
+    {
+      llvm::omp::allowedClauses_OMPD_cancellation_point,
+      llvm::omp::allowedOnceClauses_OMPD_cancellation_point,
+      llvm::omp::allowedExclusiveClauses_OMPD_cancellation_point,
+      llvm::omp::requiredClauses_OMPD_cancellation_point,
+    }
+  },
+  {llvm::omp::Directive::OMPD_critical,
+    {
+      llvm::omp::allowedClauses_OMPD_critical,
+      llvm::omp::allowedOnceClauses_OMPD_critical,
+      llvm::omp::allowedExclusiveClauses_OMPD_critical,
+      llvm::omp::requiredClauses_OMPD_critical,
+    }
+  },
+  {llvm::omp::Directive::OMPD_declare_mapper,
+    {
+      llvm::omp::allowedClauses_OMPD_declare_mapper,
+      llvm::omp::allowedOnceClauses_OMPD_declare_mapper,
+      llvm::omp::allowedExclusiveClauses_OMPD_declare_mapper,
+      llvm::omp::requiredClauses_OMPD_declare_mapper,
+    }
+  },
+  {llvm::omp::Directive::OMPD_declare_reduction,
+    {
+      llvm::omp::allowedClauses_OMPD_declare_reduction,
+      llvm::omp::allowedOnceClauses_OMPD_declare_reduction,
+      llvm::omp::allowedExclusiveClauses_OMPD_declare_reduction,
+      llvm::omp::requiredClauses_OMPD_declare_reduction,
+    }
+  },
+  {llvm::omp::Directive::OMPD_declare_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_declare_simd,
+      llvm::omp::allowedOnceClauses_OMPD_declare_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_declare_simd,
+      llvm::omp::requiredClauses_OMPD_declare_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_declare_target,
+    {
+      llvm::omp::allowedClauses_OMPD_declare_target,
+      llvm::omp::allowedOnceClauses_OMPD_declare_target,
+      llvm::omp::allowedExclusiveClauses_OMPD_declare_target,
+      llvm::omp::requiredClauses_OMPD_declare_target,
+    }
+  },
+  {llvm::omp::Directive::OMPD_declare_variant,
+    {
+      llvm::omp::allowedClauses_OMPD_declare_variant,
+      llvm::omp::allowedOnceClauses_OMPD_declare_variant,
+      llvm::omp::allowedExclusiveClauses_OMPD_declare_variant,
+      llvm::omp::requiredClauses_OMPD_declare_variant,
+    }
+  },
+  {llvm::omp::Directive::OMPD_depobj,
+    {
+      llvm::omp::allowedClauses_OMPD_depobj,
+      llvm::omp::allowedOnceClauses_OMPD_depobj,
+      llvm::omp::allowedExclusiveClauses_OMPD_depobj,
+      llvm::omp::requiredClauses_OMPD_depobj,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute,
+      llvm::omp::allowedOnceClauses_OMPD_distribute,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute,
+      llvm::omp::requiredClauses_OMPD_distribute,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute_parallel_do,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute_parallel_do,
+      llvm::omp::allowedOnceClauses_OMPD_distribute_parallel_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute_parallel_do,
+      llvm::omp::requiredClauses_OMPD_distribute_parallel_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute_parallel_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute_parallel_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_distribute_parallel_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute_parallel_do_simd,
+      llvm::omp::requiredClauses_OMPD_distribute_parallel_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute_parallel_for,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute_parallel_for,
+      llvm::omp::allowedOnceClauses_OMPD_distribute_parallel_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute_parallel_for,
+      llvm::omp::requiredClauses_OMPD_distribute_parallel_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute_parallel_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute_parallel_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_distribute_parallel_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute_parallel_for_simd,
+      llvm::omp::requiredClauses_OMPD_distribute_parallel_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_distribute_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_distribute_simd,
+      llvm::omp::allowedOnceClauses_OMPD_distribute_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_distribute_simd,
+      llvm::omp::requiredClauses_OMPD_distribute_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_do,
+    {
+      llvm::omp::allowedClauses_OMPD_do,
+      llvm::omp::allowedOnceClauses_OMPD_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_do,
+      llvm::omp::requiredClauses_OMPD_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_do_simd,
+      llvm::omp::requiredClauses_OMPD_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_declare_target,
+    {
+      llvm::omp::allowedClauses_OMPD_end_declare_target,
+      llvm::omp::allowedOnceClauses_OMPD_end_declare_target,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_declare_target,
+      llvm::omp::requiredClauses_OMPD_end_declare_target,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_declare_variant,
+    {
+      llvm::omp::allowedClauses_OMPD_end_declare_variant,
+      llvm::omp::allowedOnceClauses_OMPD_end_declare_variant,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_declare_variant,
+      llvm::omp::requiredClauses_OMPD_end_declare_variant,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_do,
+    {
+      llvm::omp::allowedClauses_OMPD_end_do,
+      llvm::omp::allowedOnceClauses_OMPD_end_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_do,
+      llvm::omp::requiredClauses_OMPD_end_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_end_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_end_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_do_simd,
+      llvm::omp::requiredClauses_OMPD_end_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_sections,
+    {
+      llvm::omp::allowedClauses_OMPD_end_sections,
+      llvm::omp::allowedOnceClauses_OMPD_end_sections,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_sections,
+      llvm::omp::requiredClauses_OMPD_end_sections,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_single,
+    {
+      llvm::omp::allowedClauses_OMPD_end_single,
+      llvm::omp::allowedOnceClauses_OMPD_end_single,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_single,
+      llvm::omp::requiredClauses_OMPD_end_single,
+    }
+  },
+  {llvm::omp::Directive::OMPD_end_workshare,
+    {
+      llvm::omp::allowedClauses_OMPD_end_workshare,
+      llvm::omp::allowedOnceClauses_OMPD_end_workshare,
+      llvm::omp::allowedExclusiveClauses_OMPD_end_workshare,
+      llvm::omp::requiredClauses_OMPD_end_workshare,
+    }
+  },
+  {llvm::omp::Directive::OMPD_flush,
+    {
+      llvm::omp::allowedClauses_OMPD_flush,
+      llvm::omp::allowedOnceClauses_OMPD_flush,
+      llvm::omp::allowedExclusiveClauses_OMPD_flush,
+      llvm::omp::requiredClauses_OMPD_flush,
+    }
+  },
+  {llvm::omp::Directive::OMPD_for,
+    {
+      llvm::omp::allowedClauses_OMPD_for,
+      llvm::omp::allowedOnceClauses_OMPD_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_for,
+      llvm::omp::requiredClauses_OMPD_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_for_simd,
+      llvm::omp::requiredClauses_OMPD_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_master,
+    {
+      llvm::omp::allowedClauses_OMPD_master,
+      llvm::omp::allowedOnceClauses_OMPD_master,
+      llvm::omp::allowedExclusiveClauses_OMPD_master,
+      llvm::omp::requiredClauses_OMPD_master,
+    }
+  },
+  {llvm::omp::Directive::OMPD_master_taskloop,
+    {
+      llvm::omp::allowedClauses_OMPD_master_taskloop,
+      llvm::omp::allowedOnceClauses_OMPD_master_taskloop,
+      llvm::omp::allowedExclusiveClauses_OMPD_master_taskloop,
+      llvm::omp::requiredClauses_OMPD_master_taskloop,
+    }
+  },
+  {llvm::omp::Directive::OMPD_master_taskloop_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_master_taskloop_simd,
+      llvm::omp::allowedOnceClauses_OMPD_master_taskloop_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_master_taskloop_simd,
+      llvm::omp::requiredClauses_OMPD_master_taskloop_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_ordered,
+    {
+      llvm::omp::allowedClauses_OMPD_ordered,
+      llvm::omp::allowedOnceClauses_OMPD_ordered,
+      llvm::omp::allowedExclusiveClauses_OMPD_ordered,
+      llvm::omp::requiredClauses_OMPD_ordered,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel,
+      llvm::omp::allowedOnceClauses_OMPD_parallel,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel,
+      llvm::omp::requiredClauses_OMPD_parallel,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_do,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_do,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_do,
+      llvm::omp::requiredClauses_OMPD_parallel_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_do_simd,
+      llvm::omp::requiredClauses_OMPD_parallel_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_for,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_for,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_for,
+      llvm::omp::requiredClauses_OMPD_parallel_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_for_simd,
+      llvm::omp::requiredClauses_OMPD_parallel_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_master,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_master,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_master,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_master,
+      llvm::omp::requiredClauses_OMPD_parallel_master,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_master_taskloop,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_master_taskloop,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_master_taskloop,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_master_taskloop,
+      llvm::omp::requiredClauses_OMPD_parallel_master_taskloop,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_master_taskloop_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_master_taskloop_simd,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_master_taskloop_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_master_taskloop_simd,
+      llvm::omp::requiredClauses_OMPD_parallel_master_taskloop_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_sections,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_sections,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_sections,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_sections,
+      llvm::omp::requiredClauses_OMPD_parallel_sections,
+    }
+  },
+  {llvm::omp::Directive::OMPD_parallel_workshare,
+    {
+      llvm::omp::allowedClauses_OMPD_parallel_workshare,
+      llvm::omp::allowedOnceClauses_OMPD_parallel_workshare,
+      llvm::omp::allowedExclusiveClauses_OMPD_parallel_workshare,
+      llvm::omp::requiredClauses_OMPD_parallel_workshare,
+    }
+  },
+  {llvm::omp::Directive::OMPD_requires,
+    {
+      llvm::omp::allowedClauses_OMPD_requires,
+      llvm::omp::allowedOnceClauses_OMPD_requires,
+      llvm::omp::allowedExclusiveClauses_OMPD_requires,
+      llvm::omp::requiredClauses_OMPD_requires,
+    }
+  },
+  {llvm::omp::Directive::OMPD_scan,
+    {
+      llvm::omp::allowedClauses_OMPD_scan,
+      llvm::omp::allowedOnceClauses_OMPD_scan,
+      llvm::omp::allowedExclusiveClauses_OMPD_scan,
+      llvm::omp::requiredClauses_OMPD_scan,
+    }
+  },
+  {llvm::omp::Directive::OMPD_section,
+    {
+      llvm::omp::allowedClauses_OMPD_section,
+      llvm::omp::allowedOnceClauses_OMPD_section,
+      llvm::omp::allowedExclusiveClauses_OMPD_section,
+      llvm::omp::requiredClauses_OMPD_section,
+    }
+  },
+  {llvm::omp::Directive::OMPD_sections,
+    {
+      llvm::omp::allowedClauses_OMPD_sections,
+      llvm::omp::allowedOnceClauses_OMPD_sections,
+      llvm::omp::allowedExclusiveClauses_OMPD_sections,
+      llvm::omp::requiredClauses_OMPD_sections,
+    }
+  },
+  {llvm::omp::Directive::OMPD_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_simd,
+      llvm::omp::allowedOnceClauses_OMPD_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_simd,
+      llvm::omp::requiredClauses_OMPD_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_single,
+    {
+      llvm::omp::allowedClauses_OMPD_single,
+      llvm::omp::allowedOnceClauses_OMPD_single,
+      llvm::omp::allowedExclusiveClauses_OMPD_single,
+      llvm::omp::requiredClauses_OMPD_single,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target,
+    {
+      llvm::omp::allowedClauses_OMPD_target,
+      llvm::omp::allowedOnceClauses_OMPD_target,
+      llvm::omp::allowedExclusiveClauses_OMPD_target,
+      llvm::omp::requiredClauses_OMPD_target,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_data,
+    {
+      llvm::omp::allowedClauses_OMPD_target_data,
+      llvm::omp::allowedOnceClauses_OMPD_target_data,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_data,
+      llvm::omp::requiredClauses_OMPD_target_data,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_enter_data,
+    {
+      llvm::omp::allowedClauses_OMPD_target_enter_data,
+      llvm::omp::allowedOnceClauses_OMPD_target_enter_data,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_enter_data,
+      llvm::omp::requiredClauses_OMPD_target_enter_data,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_exit_data,
+    {
+      llvm::omp::allowedClauses_OMPD_target_exit_data,
+      llvm::omp::allowedOnceClauses_OMPD_target_exit_data,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_exit_data,
+      llvm::omp::requiredClauses_OMPD_target_exit_data,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_parallel,
+    {
+      llvm::omp::allowedClauses_OMPD_target_parallel,
+      llvm::omp::allowedOnceClauses_OMPD_target_parallel,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_parallel,
+      llvm::omp::requiredClauses_OMPD_target_parallel,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_parallel_do,
+    {
+      llvm::omp::allowedClauses_OMPD_target_parallel_do,
+      llvm::omp::allowedOnceClauses_OMPD_target_parallel_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_parallel_do,
+      llvm::omp::requiredClauses_OMPD_target_parallel_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_parallel_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_parallel_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_parallel_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_parallel_do_simd,
+      llvm::omp::requiredClauses_OMPD_target_parallel_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_parallel_for,
+    {
+      llvm::omp::allowedClauses_OMPD_target_parallel_for,
+      llvm::omp::allowedOnceClauses_OMPD_target_parallel_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_parallel_for,
+      llvm::omp::requiredClauses_OMPD_target_parallel_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_parallel_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_parallel_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_parallel_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_parallel_for_simd,
+      llvm::omp::requiredClauses_OMPD_target_parallel_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_simd,
+      llvm::omp::requiredClauses_OMPD_target_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams,
+      llvm::omp::requiredClauses_OMPD_target_teams,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute_parallel_do,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute_parallel_do,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute_parallel_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_do,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute_parallel_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute_parallel_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute_parallel_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute_parallel_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_do_simd,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute_parallel_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute_parallel_for,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute_parallel_for,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute_parallel_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_for,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute_parallel_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute_parallel_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute_parallel_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute_parallel_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute_parallel_for_simd,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute_parallel_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_teams_distribute_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_target_teams_distribute_simd,
+      llvm::omp::allowedOnceClauses_OMPD_target_teams_distribute_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_teams_distribute_simd,
+      llvm::omp::requiredClauses_OMPD_target_teams_distribute_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_target_update,
+    {
+      llvm::omp::allowedClauses_OMPD_target_update,
+      llvm::omp::allowedOnceClauses_OMPD_target_update,
+      llvm::omp::allowedExclusiveClauses_OMPD_target_update,
+      llvm::omp::requiredClauses_OMPD_target_update,
+    }
+  },
+  {llvm::omp::Directive::OMPD_task,
+    {
+      llvm::omp::allowedClauses_OMPD_task,
+      llvm::omp::allowedOnceClauses_OMPD_task,
+      llvm::omp::allowedExclusiveClauses_OMPD_task,
+      llvm::omp::requiredClauses_OMPD_task,
+    }
+  },
+  {llvm::omp::Directive::OMPD_taskgroup,
+    {
+      llvm::omp::allowedClauses_OMPD_taskgroup,
+      llvm::omp::allowedOnceClauses_OMPD_taskgroup,
+      llvm::omp::allowedExclusiveClauses_OMPD_taskgroup,
+      llvm::omp::requiredClauses_OMPD_taskgroup,
+    }
+  },
+  {llvm::omp::Directive::OMPD_taskloop,
+    {
+      llvm::omp::allowedClauses_OMPD_taskloop,
+      llvm::omp::allowedOnceClauses_OMPD_taskloop,
+      llvm::omp::allowedExclusiveClauses_OMPD_taskloop,
+      llvm::omp::requiredClauses_OMPD_taskloop,
+    }
+  },
+  {llvm::omp::Directive::OMPD_taskloop_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_taskloop_simd,
+      llvm::omp::allowedOnceClauses_OMPD_taskloop_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_taskloop_simd,
+      llvm::omp::requiredClauses_OMPD_taskloop_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_taskwait,
+    {
+      llvm::omp::allowedClauses_OMPD_taskwait,
+      llvm::omp::allowedOnceClauses_OMPD_taskwait,
+      llvm::omp::allowedExclusiveClauses_OMPD_taskwait,
+      llvm::omp::requiredClauses_OMPD_taskwait,
+    }
+  },
+  {llvm::omp::Directive::OMPD_taskyield,
+    {
+      llvm::omp::allowedClauses_OMPD_taskyield,
+      llvm::omp::allowedOnceClauses_OMPD_taskyield,
+      llvm::omp::allowedExclusiveClauses_OMPD_taskyield,
+      llvm::omp::requiredClauses_OMPD_taskyield,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams,
+    {
+      llvm::omp::allowedClauses_OMPD_teams,
+      llvm::omp::allowedOnceClauses_OMPD_teams,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams,
+      llvm::omp::requiredClauses_OMPD_teams,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute,
+      llvm::omp::requiredClauses_OMPD_teams_distribute,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute_parallel_do,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute_parallel_do,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute_parallel_do,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute_parallel_do,
+      llvm::omp::requiredClauses_OMPD_teams_distribute_parallel_do,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute_parallel_do_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute_parallel_do_simd,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute_parallel_do_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute_parallel_do_simd,
+      llvm::omp::requiredClauses_OMPD_teams_distribute_parallel_do_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute_parallel_for,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute_parallel_for,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute_parallel_for,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute_parallel_for,
+      llvm::omp::requiredClauses_OMPD_teams_distribute_parallel_for,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute_parallel_for_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute_parallel_for_simd,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute_parallel_for_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute_parallel_for_simd,
+      llvm::omp::requiredClauses_OMPD_teams_distribute_parallel_for_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_teams_distribute_simd,
+    {
+      llvm::omp::allowedClauses_OMPD_teams_distribute_simd,
+      llvm::omp::allowedOnceClauses_OMPD_teams_distribute_simd,
+      llvm::omp::allowedExclusiveClauses_OMPD_teams_distribute_simd,
+      llvm::omp::requiredClauses_OMPD_teams_distribute_simd,
+    }
+  },
+  {llvm::omp::Directive::OMPD_threadprivate,
+    {
+      llvm::omp::allowedClauses_OMPD_threadprivate,
+      llvm::omp::allowedOnceClauses_OMPD_threadprivate,
+      llvm::omp::allowedExclusiveClauses_OMPD_threadprivate,
+      llvm::omp::requiredClauses_OMPD_threadprivate,
+    }
+  },
+  {llvm::omp::Directive::OMPD_unknown,
+    {
+      llvm::omp::allowedClauses_OMPD_unknown,
+      llvm::omp::allowedOnceClauses_OMPD_unknown,
+      llvm::omp::allowedExclusiveClauses_OMPD_unknown,
+      llvm::omp::requiredClauses_OMPD_unknown,
+    }
+  },
+  {llvm::omp::Directive::OMPD_workshare,
+    {
+      llvm::omp::allowedClauses_OMPD_workshare,
+      llvm::omp::allowedOnceClauses_OMPD_workshare,
+      llvm::omp::allowedExclusiveClauses_OMPD_workshare,
+      llvm::omp::requiredClauses_OMPD_workshare,
+    }
+  },
+};
+
+#endif // GEN_FLANG_DIRECTIVE_CLAUSE_MAP
+

@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum PPCIntrinsics : unsigned {
 // Enum values for intrinsics
-    ppc_addf128_round_to_odd = 6032,                  // llvm.ppc.addf128.round.to.odd
+    ppc_addf128_round_to_odd = 6033,                  // llvm.ppc.addf128.round.to.odd
     ppc_altivec_crypto_vcipher,                // llvm.ppc.altivec.crypto.vcipher
     ppc_altivec_crypto_vcipherlast,            // llvm.ppc.altivec.crypto.vcipherlast
     ppc_altivec_crypto_vncipher,               // llvm.ppc.altivec.crypto.vncipher
@@ -128,12 +128,14 @@ enum PPCIntrinsics : unsigned {
     ppc_altivec_vinsbrx,                       // llvm.ppc.altivec.vinsbrx
     ppc_altivec_vinsbvlx,                      // llvm.ppc.altivec.vinsbvlx
     ppc_altivec_vinsbvrx,                      // llvm.ppc.altivec.vinsbvrx
+    ppc_altivec_vinsd,                         // llvm.ppc.altivec.vinsd
     ppc_altivec_vinsdlx,                       // llvm.ppc.altivec.vinsdlx
     ppc_altivec_vinsdrx,                       // llvm.ppc.altivec.vinsdrx
     ppc_altivec_vinshlx,                       // llvm.ppc.altivec.vinshlx
     ppc_altivec_vinshrx,                       // llvm.ppc.altivec.vinshrx
     ppc_altivec_vinshvlx,                      // llvm.ppc.altivec.vinshvlx
     ppc_altivec_vinshvrx,                      // llvm.ppc.altivec.vinshvrx
+    ppc_altivec_vinsw,                         // llvm.ppc.altivec.vinsw
     ppc_altivec_vinswlx,                       // llvm.ppc.altivec.vinswlx
     ppc_altivec_vinswrx,                       // llvm.ppc.altivec.vinswrx
     ppc_altivec_vinswvlx,                      // llvm.ppc.altivec.vinswvlx

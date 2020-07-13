@@ -15,6 +15,7 @@
     bswap,                                     // llvm.bswap
     call_preallocated_arg,                     // llvm.call.preallocated.arg
     call_preallocated_setup,                   // llvm.call.preallocated.setup
+    call_preallocated_teardown,                // llvm.call.preallocated.teardown
     canonicalize,                              // llvm.canonicalize
     ceil,                                      // llvm.ceil
     clear_cache,                               // llvm.clear_cache
@@ -298,4 +299,4 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 8047
+    num_intrinsics = 8050

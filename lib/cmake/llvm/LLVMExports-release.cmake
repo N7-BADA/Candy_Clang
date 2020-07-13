@@ -1240,6 +1240,16 @@ set_target_properties(llvm-rtdyld PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS llvm-rtdyld )
 list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-rtdyld "${_IMPORT_PREFIX}/bin/llvm-rtdyld" )
 
+# Import target "LLVM" for configuration "Release"
+set_property(TARGET LLVM APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(LLVM PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libLLVM-11git.so"
+  IMPORTED_SONAME_RELEASE "libLLVM-11git.so"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS LLVM )
+list(APPEND _IMPORT_CHECK_FILES_FOR_LLVM "${_IMPORT_PREFIX}/lib/libLLVM-11git.so" )
+
 # Import target "llvm-size" for configuration "Release"
 set_property(TARGET llvm-size APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(llvm-size PROPERTIES

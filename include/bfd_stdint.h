@@ -1,4 +1,4 @@
-/* generated for  Candy-20200707 clang version 11.0.0 (GitHub.com/WLoot cca4ac523e183b33be3d4c7da68d45b697a081bd) */
+/* generated for  Candy-20200708 clang version 11.0.0 (GitHub.com/WLoot fb75451775f83c04d53e4e94bb4bd298ea9a882f) */
 
 #ifndef GCC_GENERATED_STDINT_H
 #define GCC_GENERATED_STDINT_H 1
