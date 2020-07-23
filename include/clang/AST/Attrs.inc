@@ -1161,6 +1161,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::ArmMveStrictPolymorphism; }
 };
 
+class ArmSveVectorBitsAttr : public TypeAttr {
+int numBits;
+
+public:
+  // Factory methods
+  static ArmSveVectorBitsAttr *CreateImplicit(ASTContext &Ctx, int NumBits, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArmSveVectorBitsAttr *Create(ASTContext &Ctx, int NumBits, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArmSveVectorBitsAttr *CreateImplicit(ASTContext &Ctx, int NumBits, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static ArmSveVectorBitsAttr *Create(ASTContext &Ctx, int NumBits, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  ArmSveVectorBitsAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , int NumBits
+             );
+
+  ArmSveVectorBitsAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  int getNumBits() const {
+    return numBits;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ArmSveVectorBits; }
+};
+
 class ArtificialAttr : public InheritableAttr {
 public:
   enum Spelling {

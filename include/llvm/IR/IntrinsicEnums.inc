@@ -238,6 +238,7 @@
     ptr_annotation,                            // llvm.ptr.annotation
     ptrmask,                                   // llvm.ptrmask
     read_register,                             // llvm.read_register
+    read_volatile_register,                    // llvm.read_volatile_register
     readcyclecounter,                          // llvm.readcyclecounter
     returnaddress,                             // llvm.returnaddress
     rint,                                      // llvm.rint
@@ -299,4 +300,4 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 8050
+    num_intrinsics = 8052

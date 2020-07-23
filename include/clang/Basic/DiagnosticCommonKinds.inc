@@ -122,4 +122,4 @@ DIAG(warn_poison_system_directories, CLASS_WARNING, (unsigned)diag::Severity::Ig
 DIAG(warn_slh_does_not_support_asm_goto, CLASS_WARNING, (unsigned)diag::Severity::Warning, "Speculative load hardening does not protect functions with asm goto", 692, SFINAE_Suppress, false, false, 12)
 DIAG(warn_stack_clash_protection_inline_asm, CLASS_WARNING, (unsigned)diag::Severity::Warning, "Unable to protect inline asm that clobbers stack pointer against stack clash", 697, SFINAE_Suppress, false, false, 12)
 DIAG(warn_stack_exhausted, CLASS_WARNING, (unsigned)diag::Severity::Warning, "stack nearly exhausted; compilation time may suffer, and crashes due to stack overflow are likely", 696, SFINAE_Report, false, false, 0)
-DIAG(warn_unknown_attribute_ignored, CLASS_WARNING, (unsigned)diag::Severity::Warning, "unknown attribute %0 ignored", 782, SFINAE_Suppress, false, false, 0)
+DIAG(warn_unknown_attribute_ignored, CLASS_WARNING, (unsigned)diag::Severity::Warning, "unknown attribute %0 ignored", 784, SFINAE_Suppress, false, false, 0)

@@ -95,6 +95,10 @@
     if (SA->getBuiltinName())
       OS << " " << SA->getBuiltinName()->getName();
   }
+  void VisitArmSveVectorBitsAttr(const ArmSveVectorBitsAttr *A) {
+    const auto *SA = cast<ArmSveVectorBitsAttr>(A); (void)SA;
+    OS << " " << SA->getNumBits();
+  }
   void VisitAsmLabelAttr(const AsmLabelAttr *A) {
     const auto *SA = cast<AsmLabelAttr>(A); (void)SA;
     OS << " \"" << SA->getLabel() << "\"";

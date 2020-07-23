@@ -357,6 +357,15 @@
     New->setPackExpansion(isPackExpansion);
     break;
   }
+  case attr::ArmSveVectorBits: {
+    bool isImplicit = Record.readInt();
+    bool isPackExpansion = Record.readInt();
+    int numBits = Record.readInt();
+    New = new (Context) ArmSveVectorBitsAttr(Context, Info, numBits);
+    New->setImplicit(isImplicit);
+    New->setPackExpansion(isPackExpansion);
+    break;
+  }
   case attr::Artificial: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();

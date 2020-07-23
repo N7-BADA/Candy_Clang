@@ -831,6 +831,7 @@ OPTION(prefix_1, &"-fdwarf-exceptions"[1], fdwarf_exceptions, Flag, f_Group, INV
        "Use DWARF style exceptions", nullptr, nullptr)
 OPTION(prefix_1, &"-fdwarf2-cfi-asm"[1], fdwarf2_cfi_asm, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, &"/Fd"[1], _SLASH_Fd, Joined, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption | HelpHidden, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_2, &"/Fe:"[1], _SLASH_Fe_COLON, Joined, cl_Group, _SLASH_Fe, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-felide-constructors"[1], felide_constructors, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-feliminate-unused-debug-symbols"[1], feliminate_unused_debug_symbols, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-feliminate-unused-debug-types"[1], feliminate_unused_debug_types, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -1480,6 +1481,10 @@ OPTION(prefix_1, &"-fno-pack-derived"[1], fno_pack_derived, Flag, gfortran_Group
 OPTION(prefix_1, &"-fno-pack-struct"[1], fno_pack_struct, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-fno-padding-on-unsigned-fixed-point"[1], fno_padding_on_unsigned_fixed_point, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-fno-pascal-strings"[1], fno_pascal_strings, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, &"-fno-pch-codegen"[1], fno_pch_codegen, Flag, f_Group, INVALID, nullptr, 0, 0,
+       "Do not generate code for uses of this PCH that assumes an explicit object file will be built for the PCH", nullptr, nullptr)
+OPTION(prefix_1, &"-fno-pch-debuginfo"[1], fno_pch_debuginfo, Flag, f_Group, INVALID, nullptr, 0, 0,
+       "Do not generate debug info for types in an object file built from this PCH and do not generate them elsewhere", nullptr, nullptr)
 OPTION(prefix_1, &"-fno-pch-instantiate-templates"[1], fno_pch_instantiate_templates, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-fno-pch-timestamp"[1], fno_pch_timestamp, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Disable inclusion of timestamp in precompiled headers", nullptr, nullptr)
@@ -1828,6 +1833,10 @@ OPTION(prefix_1, &"-fpatchable-function-entry="[1], fpatchable_function_entry_EQ
        "Generate M NOPs before function entry and N-M NOPs after function entry", "<N,M>", nullptr)
 OPTION(prefix_1, &"-fpcc-struct-return"[1], fpcc_struct_return, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Override the default ABI to return all structs on the stack", nullptr, nullptr)
+OPTION(prefix_1, &"-fpch-codegen"[1], fpch_codegen, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Generate code for uses of this PCH that assumes an explicit object file will be built for the PCH", nullptr, nullptr)
+OPTION(prefix_1, &"-fpch-debuginfo"[1], fpch_debuginfo, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Generate debug info for types in an object file built from this PCH and do not generate them elsewhere", nullptr, nullptr)
 OPTION(prefix_1, &"-fpch-instantiate-templates"[1], fpch_instantiate_templates, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Instantiate templates already while building a PCH", nullptr, nullptr)
 OPTION(prefix_1, &"-fpch-preprocess"[1], fpch_preprocess, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2505,6 +2514,7 @@ OPTION(prefix_3, &"--language="[2], _language_EQ, Joined, INVALID, x, nullptr, 0
 OPTION(prefix_3, &"--language"[2], _language, Separate, INVALID, x, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-lazy_framework"[1], lazy__framework, Separate, INVALID, INVALID, nullptr, LinkerInput, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-lazy_library"[1], lazy__library, Separate, INVALID, INVALID, nullptr, LinkerInput, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_3, &"--ld-path="[2], ld_path_EQ, Joined, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, &"/LDd"[1], _SLASH_LDd, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Create debug DLL", nullptr, nullptr)
 OPTION(prefix_2, &"/LD"[1], _SLASH_LD, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
@@ -2999,7 +3009,7 @@ OPTION(prefix_1, &"-mno-reference-types"[1], mno_reference_types, Flag, m_wasm_F
 OPTION(prefix_1, &"-mno-relax-all"[1], mno_relax_all, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-mno-relax-pic-calls"[1], mno_relax_pic_calls, Flag, m_mips_Features_Group, INVALID, nullptr, HelpHidden, 0,
        "Do not produce relaxation hints for linkers to try optimizing PIC call sequences into direct calls (MIPS only)", nullptr, nullptr)
-OPTION(prefix_1, &"-mno-relax"[1], mno_relax, Flag, m_riscv_Features_Group, INVALID, nullptr, 0, 0,
+OPTION(prefix_1, &"-mno-relax"[1], mno_relax, Flag, m_Group, INVALID, nullptr, 0, 0,
        "Disable linker relaxation", nullptr, nullptr)
 OPTION(prefix_1, &"-mno-restrict-it"[1], mno_restrict_it, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
        "Allow generation of deprecated IT blocks for ARMv8. It is off by default for ARMv8 Thumb mode", nullptr, nullptr)
@@ -3140,7 +3150,7 @@ OPTION(prefix_1, &"-mrelax-pic-calls"[1], mrelax_pic_calls, Flag, m_mips_Feature
        "Produce relaxation hints for linkers to try optimizing PIC call sequences into direct calls (MIPS only)", nullptr, nullptr)
 OPTION(prefix_3, &"--mrelax-relocations"[2], mrelax_relocations, Flag, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "Use relaxable elf relocations", nullptr, nullptr)
-OPTION(prefix_1, &"-mrelax"[1], mrelax, Flag, m_riscv_Features_Group, INVALID, nullptr, 0, 0,
+OPTION(prefix_1, &"-mrelax"[1], mrelax, Flag, m_Group, INVALID, nullptr, 0, 0,
        "Enable linker relaxation", nullptr, nullptr)
 OPTION(prefix_1, &"-mrelocation-model"[1], mrelocation_model, Separate, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "The relocation model to use", nullptr, "static,pic,ropi,rwpi,ropi-rwpi,dynamic-no-pic")
@@ -3168,6 +3178,7 @@ OPTION(prefix_1, &"-msign-return-address-key="[1], msign_return_address_key_EQ, 
 OPTION(prefix_1, &"-msign-return-address="[1], msign_return_address_EQ, Joined, m_Group, INVALID, nullptr, CC1Option, 0,
        "Select return address signing scope", nullptr, "none,all,non-leaf")
 OPTION(prefix_1, &"-msimd128"[1], msimd128, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, &"-msim"[1], msim, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-msingle-float"[1], msingle_float, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, &"-msmall-data-limit="[1], msmall_data_limit_EQ, Joined, m_Group, G, nullptr, 0, 0,
        "Put global and static data smaller than the limit into a special section", nullptr, nullptr)
@@ -3198,6 +3209,8 @@ OPTION(prefix_1, &"-mstackrealign"[1], mstackrealign, Flag, m_Group, INVALID, nu
        "Force realign the stack at entry to every function", nullptr, nullptr)
 OPTION(prefix_1, &"-mstrict-align"[1], mstrict_align, Flag, INVALID, mno_unaligned_access, nullptr, CC1Option | HelpHidden, 0,
        "Force all memory accesses to be aligned (same as mno-unaligned-access)", nullptr, nullptr)
+OPTION(prefix_1, &"-msve-vector-bits="[1], msve_vector_bits_EQ, Joined, m_aarch64_Features_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
+       "Specify the size in bits of an SVE vector register. Defaults to the vector length agnostic value of \"scalable\". (AArch64 only)", nullptr, "128,256,512,1024,2048,scalable")
 OPTION(prefix_1, &"-msvr4-struct-return"[1], msvr4_struct_return, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
        "Return small structs in registers (PPC32 only)", nullptr, nullptr)
 OPTION(prefix_1, &"-mt-migrate-directory"[1], mt_migrate_directory, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,

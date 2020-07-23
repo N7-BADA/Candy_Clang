@@ -1826,6 +1826,7 @@ namespace omp {
   // Sets for taskwait
 
   static OmpClauseSet allowedClauses_OMPD_taskwait {
+    llvm::omp::Clause::OMPC_depend,
   };
 
   static OmpClauseSet allowedOnceClauses_OMPD_taskwait {

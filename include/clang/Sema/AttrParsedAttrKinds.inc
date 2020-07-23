@@ -1258,13 +1258,22 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WarnUnusedResult;	 // "warn_unused_result"
     }
     break;
-  case 19:	 // 13 strings to match.
+  case 19:	 // 14 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'a':	 // 1 string to match.
-      if (memcmp(Name.data()+1, "mdgpu_waves_per_eu", 18) != 0)
-        break;
-      return AttributeCommonInfo::AT_AMDGPUWavesPerEU;	 // "amdgpu_waves_per_eu"
+    case 'a':	 // 2 strings to match.
+      switch (Name[1]) {
+      default: break;
+      case 'm':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "dgpu_waves_per_eu", 17) != 0)
+          break;
+        return AttributeCommonInfo::AT_AMDGPUWavesPerEU;	 // "amdgpu_waves_per_eu"
+      case 'r':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "m_sve_vector_bits", 17) != 0)
+          break;
+        return AttributeCommonInfo::AT_ArmSveVectorBits;	 // "arm_sve_vector_bits"
+      }
+      break;
     case 'c':	 // 4 strings to match.
       switch (Name[1]) {
       default: break;

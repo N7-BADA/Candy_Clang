@@ -58,6 +58,7 @@ case AttrSyntax::GNU:
     .Case("pointer_with_type_tag", 1)
     .Case("__clang_arm_builtin_alias", true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb || T.getArch() == llvm::Triple::aarch64) ? 1 : 0)
     .Case("__clang_arm_mve_strict_polymorphism", true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb) ? 1 : 0)
+    .Case("arm_sve_vector_bits", 1)
     .Case("artificial", 1)
     .Case("assert_capability", 1)
     .Case("assert_shared_capability", 1)

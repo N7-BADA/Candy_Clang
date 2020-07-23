@@ -2808,6 +2808,74 @@ const char *ArmMveStrictPolymorphismAttr::getSpelling() const {
 }
 
 
+// ArmSveVectorBitsAttr implementation
+
+ArmSveVectorBitsAttr *ArmSveVectorBitsAttr::CreateImplicit(ASTContext &Ctx, int NumBits, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) ArmSveVectorBitsAttr(Ctx, CommonInfo, NumBits);
+  A->setImplicit(true);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+ArmSveVectorBitsAttr *ArmSveVectorBitsAttr::Create(ASTContext &Ctx, int NumBits, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) ArmSveVectorBitsAttr(Ctx, CommonInfo, NumBits);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+ArmSveVectorBitsAttr *ArmSveVectorBitsAttr::CreateImplicit(ASTContext &Ctx, int NumBits, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return CreateImplicit(Ctx, NumBits, I);
+}
+
+ArmSveVectorBitsAttr *ArmSveVectorBitsAttr::Create(ASTContext &Ctx, int NumBits, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return Create(Ctx, NumBits, I);
+}
+
+ArmSveVectorBitsAttr::ArmSveVectorBitsAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , int NumBits
+             )
+  : TypeAttr(Ctx, CommonInfo, attr::ArmSveVectorBits, false)
+              , numBits(NumBits)
+  {
+}
+
+
+
+ArmSveVectorBitsAttr *ArmSveVectorBitsAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ArmSveVectorBitsAttr(C, *this, numBits);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ArmSveVectorBitsAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((arm_sve_vector_bits(" << getNumBits() << ")))";
+    break;
+  }
+}
+}
+
+const char *ArmSveVectorBitsAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "arm_sve_vector_bits";
+  }
+}
+
+
 // ArtificialAttr implementation
 
 ArtificialAttr *ArtificialAttr::CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
@@ -25337,6 +25405,8 @@ const char *Attr::getSpelling() const {
     return cast<ArmBuiltinAliasAttr>(this)->getSpelling();
   case attr::ArmMveStrictPolymorphism:
     return cast<ArmMveStrictPolymorphismAttr>(this)->getSpelling();
+  case attr::ArmSveVectorBits:
+    return cast<ArmSveVectorBitsAttr>(this)->getSpelling();
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->getSpelling();
   case attr::AsmLabel:
@@ -25951,6 +26021,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ArmBuiltinAliasAttr>(this)->clone(C);
   case attr::ArmMveStrictPolymorphism:
     return cast<ArmMveStrictPolymorphismAttr>(this)->clone(C);
+  case attr::ArmSveVectorBits:
+    return cast<ArmSveVectorBitsAttr>(this)->clone(C);
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->clone(C);
   case attr::AsmLabel:
@@ -26565,6 +26637,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ArmBuiltinAliasAttr>(this)->printPretty(OS, Policy);
   case attr::ArmMveStrictPolymorphism:
     return cast<ArmMveStrictPolymorphismAttr>(this)->printPretty(OS, Policy);
+  case attr::ArmSveVectorBits:
+    return cast<ArmSveVectorBitsAttr>(this)->printPretty(OS, Policy);
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->printPretty(OS, Policy);
   case attr::AsmLabel:

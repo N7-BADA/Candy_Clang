@@ -144,7 +144,7 @@ struct ParsedAttrInfoAMDGPUFlatWorkGroupSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AMDGPUFlatWorkGroupSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
@@ -153,7 +153,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -177,7 +177,7 @@ struct ParsedAttrInfoAMDGPUNumSGPR final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AMDGPUNumSGPRSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
@@ -186,7 +186,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -210,7 +210,7 @@ struct ParsedAttrInfoAMDGPUNumVGPR final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AMDGPUNumVGPRSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
@@ -219,7 +219,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -243,7 +243,7 @@ struct ParsedAttrInfoAMDGPUWavesPerEU final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AMDGPUWavesPerEUSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
@@ -252,7 +252,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -277,7 +277,7 @@ struct ParsedAttrInfoInterrupt final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = InterruptSpellings;
   }
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb || T.getArch() == llvm::Triple::avr || T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::msp430 || T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel || T.getArch() == llvm::Triple::riscv32 || T.getArch() == llvm::Triple::riscv64);
 }
@@ -303,7 +303,7 @@ struct ParsedAttrInfoAVRSignal final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AVRSignalSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -312,12 +312,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::avr);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -341,7 +341,7 @@ struct ParsedAttrInfoAbiTag final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AbiTagSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isStruct(D) && !isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<NamespaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, variables, functions, and namespaces";
@@ -350,7 +350,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record_not_is_union, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
@@ -381,7 +381,7 @@ struct ParsedAttrInfoAcquireCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AcquireCapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -390,7 +390,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_acquire_capability = 0,
     CXX11_clang_acquire_capability = 1,
@@ -435,7 +435,7 @@ struct ParsedAttrInfoAcquireHandle final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AcquireHandleSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, typedefs, and parameters";
@@ -444,7 +444,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_type_alias, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
@@ -469,7 +469,7 @@ struct ParsedAttrInfoAcquiredAfter final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AcquiredAfterSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -497,7 +497,7 @@ struct ParsedAttrInfoAcquiredBefore final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AcquiredBeforeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -548,7 +548,7 @@ struct ParsedAttrInfoAlias final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AliasSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and global variables";
@@ -557,7 +557,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
 }
@@ -581,7 +581,7 @@ struct ParsedAttrInfoAlignValue final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AlignValueSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables and typedefs";
@@ -590,7 +590,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_type_alias, /*IsSupported=*/true));
 }
@@ -619,7 +619,7 @@ struct ParsedAttrInfoAligned final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AlignedSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_aligned = 0,
     CXX11_gnu_aligned = 1,
@@ -664,7 +664,7 @@ struct ParsedAttrInfoAllocAlign final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AllocAlignSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
@@ -694,7 +694,7 @@ struct ParsedAttrInfoAllocSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AllocSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -703,7 +703,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -727,7 +727,7 @@ struct ParsedAttrInfoAlwaysDestroy final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AlwaysDestroySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -736,7 +736,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -762,7 +762,7 @@ struct ParsedAttrInfoAlwaysInline final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AlwaysInlineSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -771,7 +771,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_always_inline = 0,
     CXX11_gnu_always_inline = 1,
@@ -791,7 +791,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -856,12 +856,12 @@ struct ParsedAttrInfoAnyX86NoCallerSavedRegisters final : public ParsedAttrInfo 
     IsSupportedByPragmaAttribute = 0;
     Spellings = AnyX86NoCallerSavedRegistersSpellings;
   }
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) AnyX86NoCallerSavedRegistersAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -887,7 +887,7 @@ struct ParsedAttrInfoAnyX86NoCfCheck final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AnyX86NoCfCheckSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and function pointers";
@@ -896,12 +896,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_hasType_functionType, /*IsSupported=*/true));
 }
 
@@ -926,7 +926,7 @@ struct ParsedAttrInfoArcWeakrefUnavailable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ArcWeakrefUnavailableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -935,11 +935,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ArcWeakrefUnavailableAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -968,7 +968,7 @@ struct ParsedAttrInfoArgumentWithTypeTag final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ArgumentWithTypeTagSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
@@ -977,7 +977,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_argument_with_type_tag = 0,
     CXX11_clang_argument_with_type_tag = 1,
@@ -1022,7 +1022,7 @@ struct ParsedAttrInfoArmBuiltinAlias final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ArmBuiltinAliasSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1031,12 +1031,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb || T.getArch() == llvm::Triple::aarch64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1061,7 +1061,7 @@ struct ParsedAttrInfoArmMveStrictPolymorphism final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ArmMveStrictPolymorphismSpellings;
   }
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb);
 }
@@ -1069,6 +1069,25 @@ virtual bool existsInTarget(const TargetInfo &Target) const {
 static const ParsedAttrInfoArmMveStrictPolymorphism Instance;
 };
 const ParsedAttrInfoArmMveStrictPolymorphism ParsedAttrInfoArmMveStrictPolymorphism::Instance;
+static constexpr ParsedAttrInfo::Spelling ArmSveVectorBitsSpellings[] = {
+  {AttributeCommonInfo::AS_GNU, "arm_sve_vector_bits"},
+};
+struct ParsedAttrInfoArmSveVectorBits final : public ParsedAttrInfo {
+  ParsedAttrInfoArmSveVectorBits() {
+    AttrKind = ParsedAttr::AT_ArmSveVectorBits;
+    NumArgs = 1;
+    OptArgs = 0;
+    HasCustomParsing = 0;
+    IsTargetSpecific = 0;
+    IsType = 1;
+    IsStmt = 0;
+    IsKnownToGCC = 0;
+    IsSupportedByPragmaAttribute = 0;
+    Spellings = ArmSveVectorBitsSpellings;
+  }
+static const ParsedAttrInfoArmSveVectorBits Instance;
+};
+const ParsedAttrInfoArmSveVectorBits ParsedAttrInfoArmSveVectorBits::Instance;
 static constexpr ParsedAttrInfo::Spelling ArtificialSpellings[] = {
   {AttributeCommonInfo::AS_GNU, "artificial"},
   {AttributeCommonInfo::AS_CXX11, "gnu::artificial"},
@@ -1087,7 +1106,7 @@ struct ParsedAttrInfoArtificial final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ArtificialSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isInlineFunction(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "inline functions";
@@ -1096,7 +1115,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ArtificialAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -1123,7 +1142,7 @@ struct ParsedAttrInfoAssertCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AssertCapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1132,7 +1151,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_assert_capability = 0,
     CXX11_clang_assert_capability = 1,
@@ -1171,7 +1190,7 @@ struct ParsedAttrInfoAssertExclusiveLock final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AssertExclusiveLockSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1199,7 +1218,7 @@ struct ParsedAttrInfoAssertSharedLock final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = AssertSharedLockSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1229,7 +1248,7 @@ struct ParsedAttrInfoAssumeAligned final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AssumeAlignedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and functions";
@@ -1238,7 +1257,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
@@ -1264,7 +1283,7 @@ struct ParsedAttrInfoAvailability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = AvailabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<NamedDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "named declarations";
@@ -1273,7 +1292,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum_constant, /*IsSupported=*/true));
@@ -1312,7 +1331,7 @@ struct ParsedAttrInfoBPFPreserveAccessIndex final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = BPFPreserveAccessIndexSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -1321,7 +1340,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if ((!LangOpts.CPlusPlus))
     return true;
@@ -1330,12 +1349,12 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::bpfel || T.getArch() == llvm::Triple::bpfeb);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -1404,7 +1423,7 @@ struct ParsedAttrInfoCFAuditedTransfer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CFAuditedTransferSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1413,7 +1432,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1438,7 +1457,7 @@ struct ParsedAttrInfoCFConsumed final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CFConsumedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -1447,7 +1466,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -1470,7 +1489,7 @@ struct ParsedAttrInfoCFGuard final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = CFGuardSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1500,7 +1519,7 @@ struct ParsedAttrInfoCFICanonicalJumpTable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CFICanonicalJumpTableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1509,11 +1528,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) CFICanonicalJumpTableAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -1581,7 +1600,7 @@ struct ParsedAttrInfoCFUnknownTransfer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CFUnknownTransferSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1590,7 +1609,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1616,7 +1635,7 @@ struct ParsedAttrInfoCPUDispatch final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CPUDispatchSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1625,7 +1644,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1651,7 +1670,7 @@ struct ParsedAttrInfoCPUSpecific final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CPUSpecificSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1660,7 +1679,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1684,7 +1703,7 @@ struct ParsedAttrInfoCUDAConstant final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDAConstantSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -1693,7 +1712,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1702,7 +1721,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -1726,7 +1745,7 @@ struct ParsedAttrInfoCUDADevice final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDADeviceSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and variables";
@@ -1735,7 +1754,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1744,7 +1763,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
@@ -1769,7 +1788,7 @@ struct ParsedAttrInfoCUDADeviceBuiltinSurfaceType final : public ParsedAttrInfo 
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDADeviceBuiltinSurfaceTypeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -1778,7 +1797,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1787,7 +1806,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -1811,7 +1830,7 @@ struct ParsedAttrInfoCUDADeviceBuiltinTextureType final : public ParsedAttrInfo 
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDADeviceBuiltinTextureTypeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -1820,7 +1839,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1829,7 +1848,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -1853,7 +1872,7 @@ struct ParsedAttrInfoCUDAGlobal final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDAGlobalSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1862,7 +1881,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1871,7 +1890,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1895,7 +1914,7 @@ struct ParsedAttrInfoCUDAHost final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDAHostSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1904,7 +1923,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1913,7 +1932,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -1932,7 +1951,7 @@ struct ParsedAttrInfoCUDAInvalidTarget final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -1941,7 +1960,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1970,7 +1989,7 @@ struct ParsedAttrInfoCUDALaunchBounds final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDALaunchBoundsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, functions, and function pointers";
@@ -1979,7 +1998,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -1988,7 +2007,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_hasType_functionType, /*IsSupported=*/true));
 }
@@ -2013,7 +2032,7 @@ struct ParsedAttrInfoCUDAShared final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CUDASharedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -2022,7 +2041,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CUDA)
     return true;
@@ -2031,7 +2050,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -2054,7 +2073,7 @@ struct ParsedAttrInfoCXX11NoReturn final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CXX11NoReturnSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2063,11 +2082,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) CXX11NoReturnAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2092,7 +2111,7 @@ struct ParsedAttrInfoCallableWhen final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CallableWhenSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2101,7 +2120,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function_is_member, /*IsSupported=*/LangOpts.CPlusPlus));
 }
 
@@ -2126,7 +2145,7 @@ struct ParsedAttrInfoCallback final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CallbackSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2135,7 +2154,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -2161,7 +2180,7 @@ struct ParsedAttrInfoCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and typedefs";
@@ -2170,7 +2189,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_capability = 0,
     CXX11_clang_capability = 1,
@@ -2190,7 +2209,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_type_alias, /*IsSupported=*/true));
 }
@@ -2215,7 +2234,7 @@ struct ParsedAttrInfoCarriesDependency final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CarriesDependencySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters, Objective-C methods, and functions";
@@ -2224,7 +2243,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
@@ -2251,7 +2270,7 @@ struct ParsedAttrInfoCleanup final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CleanupSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isLocalVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "local variables";
@@ -2260,7 +2279,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_local, /*IsSupported=*/true));
 }
 
@@ -2283,7 +2302,7 @@ struct ParsedAttrInfoCmseNSCall final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = CmseNSCallSpellings;
   }
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.Cmse)
     return true;
@@ -2292,7 +2311,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb);
 }
@@ -2316,7 +2335,7 @@ struct ParsedAttrInfoCmseNSEntry final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CmseNSEntrySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2325,7 +2344,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.Cmse)
     return true;
@@ -2334,12 +2353,12 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -2362,7 +2381,7 @@ struct ParsedAttrInfoCodeSeg final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = CodeSegSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and classes";
@@ -2392,7 +2411,7 @@ struct ParsedAttrInfoCold final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ColdSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2401,7 +2420,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -2426,7 +2445,7 @@ struct ParsedAttrInfoCommon final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = CommonSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -2435,7 +2454,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -2463,7 +2482,7 @@ struct ParsedAttrInfoConst final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ConstSpellings;
   }
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ConstAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2489,7 +2508,7 @@ struct ParsedAttrInfoConstInit final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConstInitSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -2498,7 +2517,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CPlusPlus)
     return true;
@@ -2507,7 +2526,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_constinit = 0,
     GNU_require_constant_initialization = 1,
@@ -2525,11 +2544,11 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ConstInitAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2555,7 +2574,7 @@ struct ParsedAttrInfoConstructor final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConstructorSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2564,7 +2583,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -2588,7 +2607,7 @@ struct ParsedAttrInfoConsumable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConsumableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -2597,7 +2616,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -2621,7 +2640,7 @@ struct ParsedAttrInfoConsumableAutoCast final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConsumableAutoCastSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -2630,11 +2649,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ConsumableAutoCastAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2659,7 +2678,7 @@ struct ParsedAttrInfoConsumableSetOnRead final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConsumableSetOnReadSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -2668,11 +2687,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ConsumableSetOnReadAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2698,7 +2717,7 @@ struct ParsedAttrInfoConvergent final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ConvergentSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2707,11 +2726,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ConvergentAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -2738,7 +2757,7 @@ struct ParsedAttrInfoDLLExport final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = DLLExportSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, variables, classes, and Objective-C interfaces";
@@ -2747,12 +2766,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && (T.getOS() == llvm::Triple::Win32);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
@@ -2774,7 +2793,7 @@ struct ParsedAttrInfoDLLExportStaticLocal final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2783,7 +2802,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && (T.getOS() == llvm::Triple::Win32);
 }
@@ -2810,7 +2829,7 @@ struct ParsedAttrInfoDLLImport final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = DLLImportSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, variables, classes, and Objective-C interfaces";
@@ -2819,12 +2838,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && (T.getOS() == llvm::Triple::Win32);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
@@ -2846,7 +2865,7 @@ struct ParsedAttrInfoDLLImportStaticLocal final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2855,7 +2874,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && (T.getOS() == llvm::Triple::Win32);
 }
@@ -2905,7 +2924,7 @@ struct ParsedAttrInfoDestructor final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = DestructorSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -2914,7 +2933,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -2937,7 +2956,7 @@ struct ParsedAttrInfoDiagnoseIf final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = DiagnoseIfSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and Objective-C properties";
@@ -2967,7 +2986,7 @@ struct ParsedAttrInfoDisableTailCalls final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = DisableTailCallsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -2976,7 +2995,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -3000,7 +3019,7 @@ struct ParsedAttrInfoEmptyBases final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = EmptyBasesSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -3009,12 +3028,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && ( Target.getCXXABI().isMicrosoft() );
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) EmptyBasesAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3038,7 +3057,7 @@ struct ParsedAttrInfoEnableIf final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = EnableIfSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3047,7 +3066,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -3072,7 +3091,7 @@ struct ParsedAttrInfoEnumExtensibility final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = EnumExtensibilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "enums";
@@ -3081,7 +3100,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum, /*IsSupported=*/true));
 }
 
@@ -3106,7 +3125,7 @@ struct ParsedAttrInfoExcludeFromExplicitInstantiation final : public ParsedAttrI
     IsSupportedByPragmaAttribute = 1;
     Spellings = ExcludeFromExplicitInstantiationSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
@@ -3115,13 +3134,13 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ExcludeFromExplicitInstantiationAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3145,7 +3164,7 @@ struct ParsedAttrInfoExclusiveTrylockFunction final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ExclusiveTrylockFunctionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3173,7 +3192,7 @@ struct ParsedAttrInfoExtVectorType final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ExtVectorTypeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "typedefs";
@@ -3203,7 +3222,7 @@ struct ParsedAttrInfoExternalSourceSymbol final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ExternalSourceSymbolSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<NamedDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "named declarations";
@@ -3212,7 +3231,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum_constant, /*IsSupported=*/true));
@@ -3298,7 +3317,7 @@ struct ParsedAttrInfoFlagEnum final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = FlagEnumSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "enums";
@@ -3307,11 +3326,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) FlagEnumAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3337,7 +3356,7 @@ struct ParsedAttrInfoFlatten final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = FlattenSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3346,11 +3365,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) FlattenAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3376,7 +3395,7 @@ struct ParsedAttrInfoFormat final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = FormatSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D) && !isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, blocks, and non-K&R-style functions";
@@ -3406,7 +3425,7 @@ struct ParsedAttrInfoFormatArg final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = FormatArgSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and non-K&R-style functions";
@@ -3436,7 +3455,7 @@ struct ParsedAttrInfoGNUInline final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = GNUInlineSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3445,7 +3464,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -3468,7 +3487,7 @@ struct ParsedAttrInfoGuardedBy final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = GuardedBySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -3497,7 +3516,7 @@ struct ParsedAttrInfoGuardedVar final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = GuardedVarSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -3506,7 +3525,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) GuardedVarAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3532,7 +3551,7 @@ struct ParsedAttrInfoHot final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = HotSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3541,7 +3560,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -3566,7 +3585,7 @@ struct ParsedAttrInfoIBAction final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = IBActionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isObjCInstanceMethod(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C instance methods";
@@ -3575,11 +3594,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method_is_instance, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) IBActionAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3647,7 +3666,7 @@ struct ParsedAttrInfoIFunc final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = IFuncSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3656,12 +3675,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getObjectFormat() == llvm::Triple::ELF);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -3685,7 +3704,7 @@ struct ParsedAttrInfoInitPriority final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = InitPrioritySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -3694,7 +3713,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -3739,7 +3758,7 @@ struct ParsedAttrInfoInternalLinkage final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = InternalLinkageSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
@@ -3748,7 +3767,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
@@ -3775,7 +3794,7 @@ struct ParsedAttrInfoLTOVisibilityPublic final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = LTOVisibilityPublicSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -3784,11 +3803,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) LTOVisibilityPublicAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3812,7 +3831,7 @@ struct ParsedAttrInfoLayoutVersion final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = LayoutVersionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -3821,7 +3840,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && ( Target.getCXXABI().isMicrosoft() );
 }
@@ -3846,7 +3865,7 @@ struct ParsedAttrInfoLifetimeBound final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = LifetimeBoundSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D) && !isImplicitObjectParameter(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters and implicit object parameters";
@@ -3855,7 +3874,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CPlusPlus)
     return true;
@@ -3864,7 +3883,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) LifetimeBoundAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -3890,7 +3909,7 @@ struct ParsedAttrInfoLoaderUninitialized final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = LoaderUninitializedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -3899,7 +3918,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
 }
 
@@ -3922,7 +3941,7 @@ struct ParsedAttrInfoLockReturned final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = LockReturnedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -3950,7 +3969,7 @@ struct ParsedAttrInfoLockable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = LockableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -3959,7 +3978,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -3982,7 +4001,7 @@ struct ParsedAttrInfoLocksExcluded final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = LocksExcludedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4014,7 +4033,7 @@ struct ParsedAttrInfoLoopHint final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = LoopHintSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Pragma_clang_loop = 0,
     Pragma_unroll = 1,
@@ -4057,7 +4076,7 @@ struct ParsedAttrInfoMIGServerRoutine final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MIGServerRoutineSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and blocks";
@@ -4066,7 +4085,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_block, /*IsSupported=*/LangOpts.Blocks));
@@ -4112,7 +4131,7 @@ struct ParsedAttrInfoMSAllocator final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = MSAllocatorSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4143,7 +4162,7 @@ struct ParsedAttrInfoMSInheritance final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = MSInheritanceSpellings;
   }
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.MicrosoftExt)
     return true;
@@ -4152,7 +4171,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_single_inheritance = 0,
     Keyword_multiple_inheritance = 1,
@@ -4191,7 +4210,7 @@ struct ParsedAttrInfoMSNoVTable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = MSNoVTableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -4200,12 +4219,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64 || T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::aarch64) && ( Target.getCXXABI().isMicrosoft() );
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) MSNoVTableAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4231,7 +4250,7 @@ struct ParsedAttrInfoMSStruct final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MSStructSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -4240,11 +4259,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) MSStructAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4270,7 +4289,7 @@ struct ParsedAttrInfoMatrixType final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = MatrixTypeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "typedefs";
@@ -4300,7 +4319,7 @@ struct ParsedAttrInfoMayAlias final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = MayAliasSpellings;
   }
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) MayAliasAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4326,7 +4345,7 @@ struct ParsedAttrInfoMicroMips final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MicroMipsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4335,12 +4354,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4365,7 +4384,7 @@ struct ParsedAttrInfoMinSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MinSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -4374,7 +4393,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -4400,7 +4419,7 @@ struct ParsedAttrInfoMinVectorWidth final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MinVectorWidthSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4409,7 +4428,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4434,7 +4453,7 @@ struct ParsedAttrInfoMips16 final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = Mips16Spellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4443,12 +4462,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4476,7 +4495,7 @@ struct ParsedAttrInfoMipsLongCall final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MipsLongCallSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4485,12 +4504,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel || T.getArch() == llvm::Triple::mips64 || T.getArch() == llvm::Triple::mips64el);
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_long_call = 0,
     CXX11_gnu_long_call = 1,
@@ -4514,7 +4533,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4542,7 +4561,7 @@ struct ParsedAttrInfoMipsShortCall final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = MipsShortCallSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4551,12 +4570,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel || T.getArch() == llvm::Triple::mips64 || T.getArch() == llvm::Triple::mips64el);
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_short_call = 0,
     CXX11_gnu_short_call = 1,
@@ -4580,7 +4599,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4605,7 +4624,7 @@ struct ParsedAttrInfoMode final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ModeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<EnumDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<FieldDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables, enums, typedefs, and non-static data members";
@@ -4635,7 +4654,7 @@ struct ParsedAttrInfoNSConsumed final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NSConsumedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -4644,7 +4663,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -4669,7 +4688,7 @@ struct ParsedAttrInfoNSConsumesSelf final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NSConsumesSelfSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
@@ -4678,11 +4697,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NSConsumesSelfAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4772,7 +4791,7 @@ struct ParsedAttrInfoNaked final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NakedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4781,7 +4800,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4846,7 +4865,7 @@ struct ParsedAttrInfoNoAlias final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = NoAliasSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4855,7 +4874,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoAliasAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4881,7 +4900,7 @@ struct ParsedAttrInfoNoBuiltin final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoBuiltinSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -4890,7 +4909,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -4915,7 +4934,7 @@ struct ParsedAttrInfoNoCommon final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoCommonSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -4924,11 +4943,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoCommonAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -4954,7 +4973,7 @@ struct ParsedAttrInfoNoDebug final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoDebugSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<TypedefNameDecl>(D) && !isFunctionLike(D) && !isa<ObjCMethodDecl>(D) && !isNonParmVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "typedefs, functions, function pointers, Objective-C methods, and variables";
@@ -4963,7 +4982,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_type_alias, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_hasType_functionType, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
@@ -5011,7 +5030,7 @@ struct ParsedAttrInfoNoDestroy final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoDestroySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -5020,7 +5039,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -5045,7 +5064,7 @@ struct ParsedAttrInfoNoDuplicate final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoDuplicateSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5054,11 +5073,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoDuplicateAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5084,7 +5103,7 @@ struct ParsedAttrInfoNoEscape final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoEscapeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -5093,7 +5112,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -5119,7 +5138,7 @@ struct ParsedAttrInfoNoInline final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoInlineSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5128,11 +5147,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoInlineAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5158,7 +5177,7 @@ struct ParsedAttrInfoNoInstrumentFunction final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoInstrumentFunctionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5167,11 +5186,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoInstrumentFunctionAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5218,7 +5237,7 @@ struct ParsedAttrInfoNoMicroMips final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoMicroMipsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5227,16 +5246,16 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoMicroMipsAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5262,7 +5281,7 @@ struct ParsedAttrInfoNoMips16 final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoMips16Spellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5271,16 +5290,16 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::mips || T.getArch() == llvm::Triple::mipsel);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoMips16Attr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5328,7 +5347,7 @@ struct ParsedAttrInfoNoSanitize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoSanitizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and global variables";
@@ -5337,7 +5356,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
@@ -5373,7 +5392,7 @@ struct ParsedAttrInfoNoSanitizeSpecific final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoSanitizeSpecificSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and global variables";
@@ -5382,7 +5401,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
 }
@@ -5408,7 +5427,7 @@ struct ParsedAttrInfoNoSpeculativeLoadHardening final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoSpeculativeLoadHardeningSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -5417,7 +5436,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -5443,7 +5462,7 @@ struct ParsedAttrInfoNoSplitStack final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoSplitStackSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5452,11 +5471,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoSplitStackAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5482,7 +5501,7 @@ struct ParsedAttrInfoNoStackProtector final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoStackProtectorSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5491,11 +5510,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoStackProtectorAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5521,7 +5540,7 @@ struct ParsedAttrInfoNoThreadSafetyAnalysis final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoThreadSafetyAnalysisSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5530,11 +5549,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoThreadSafetyAnalysisAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5561,7 +5580,7 @@ struct ParsedAttrInfoNoThrow final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NoThrowSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and function pointers";
@@ -5570,7 +5589,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_hasType_functionType, /*IsSupported=*/true));
 }
 
@@ -5593,7 +5612,7 @@ struct ParsedAttrInfoNoUniqueAddress final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = NoUniqueAddressSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isNonBitField(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-bit-field non-static data members";
@@ -5602,12 +5621,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && ( Target.getCXXABI().isItaniumFamily() );
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) NoUniqueAddressAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5633,7 +5652,7 @@ struct ParsedAttrInfoNonNull final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = NonNullSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, methods, and parameters";
@@ -5663,7 +5682,7 @@ struct ParsedAttrInfoNotTailCalled final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = NotTailCalledSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -5672,7 +5691,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -5697,7 +5716,7 @@ struct ParsedAttrInfoOSConsumed final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OSConsumedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -5706,7 +5725,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -5731,7 +5750,7 @@ struct ParsedAttrInfoOSConsumesThis final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OSConsumesThisSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isNonStaticCXXMethod(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static member functions";
@@ -5740,7 +5759,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) OSConsumesThisAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -5766,7 +5785,7 @@ struct ParsedAttrInfoOSReturnsNotRetained final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OSReturnsNotRetainedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, Objective-C properties, and parameters";
@@ -5775,7 +5794,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_property, /*IsSupported=*/LangOpts.ObjC));
@@ -5803,7 +5822,7 @@ struct ParsedAttrInfoOSReturnsRetained final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OSReturnsRetainedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, Objective-C properties, and parameters";
@@ -5812,7 +5831,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_property, /*IsSupported=*/LangOpts.ObjC));
@@ -5840,7 +5859,7 @@ struct ParsedAttrInfoOSReturnsRetainedOnNonZero final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OSReturnsRetainedOnNonZeroSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -5849,7 +5868,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -5874,7 +5893,7 @@ struct ParsedAttrInfoOSReturnsRetainedOnZero final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OSReturnsRetainedOnZeroSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -5883,7 +5902,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -5908,7 +5927,7 @@ struct ParsedAttrInfoObjCBoxable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCBoxableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -5917,7 +5936,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -5942,7 +5961,7 @@ struct ParsedAttrInfoObjCBridge final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCBridgeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and typedefs";
@@ -5951,7 +5970,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_type_alias, /*IsSupported=*/true));
 }
@@ -5977,7 +5996,7 @@ struct ParsedAttrInfoObjCBridgeMutable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCBridgeMutableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -5986,7 +6005,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -6011,7 +6030,7 @@ struct ParsedAttrInfoObjCBridgeRelated final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCBridgeRelatedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -6020,7 +6039,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -6045,7 +6064,7 @@ struct ParsedAttrInfoObjCClassStub final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCClassStubSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6054,7 +6073,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if ((LangOpts.ObjCRuntime.allowsClassStubs()))
     return true;
@@ -6063,11 +6082,11 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCClassStubAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6093,7 +6112,7 @@ struct ParsedAttrInfoObjCDesignatedInitializer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCDesignatedInitializerSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
@@ -6102,7 +6121,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
@@ -6127,7 +6146,7 @@ struct ParsedAttrInfoObjCDirect final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCDirectSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
@@ -6136,7 +6155,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.ObjC)
     return true;
@@ -6145,7 +6164,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
@@ -6170,7 +6189,7 @@ struct ParsedAttrInfoObjCDirectMembers final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCDirectMembersSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCImplDecl>(D) && !isa<ObjCInterfaceDecl>(D) && !isa<ObjCCategoryDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C implementation declarations, Objective-C interfaces, and Objective-C containers";
@@ -6179,7 +6198,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.ObjC)
     return true;
@@ -6188,7 +6207,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_implementation, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_category, /*IsSupported=*/LangOpts.ObjC));
@@ -6215,7 +6234,7 @@ struct ParsedAttrInfoObjCException final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCExceptionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6224,11 +6243,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCExceptionAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6254,7 +6273,7 @@ struct ParsedAttrInfoObjCExplicitProtocolImpl final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCExplicitProtocolImplSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCProtocolDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C protocols";
@@ -6263,7 +6282,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_protocol, /*IsSupported=*/LangOpts.ObjC));
 }
 
@@ -6288,7 +6307,7 @@ struct ParsedAttrInfoObjCExternallyRetained final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCExternallyRetainedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isNonParmVar(D) && !isa<FunctionDecl>(D) && !isa<BlockDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, blocks, and Objective-C methods";
@@ -6297,7 +6316,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.ObjCAutoRefCount)
     return true;
@@ -6306,7 +6325,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_not_is_parameter, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_block, /*IsSupported=*/LangOpts.Blocks));
@@ -6414,7 +6433,7 @@ struct ParsedAttrInfoObjCMethodFamily final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCMethodFamilySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
@@ -6423,7 +6442,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
@@ -6469,7 +6488,7 @@ struct ParsedAttrInfoObjCNonLazyClass final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCNonLazyClassSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCImplDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces and Objective-C implementation declarations";
@@ -6478,7 +6497,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.ObjC)
     return true;
@@ -6487,12 +6506,12 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_implementation, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCNonLazyClassAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6539,7 +6558,7 @@ struct ParsedAttrInfoObjCPreciseLifetime final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCPreciseLifetimeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -6548,7 +6567,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -6573,7 +6592,7 @@ struct ParsedAttrInfoObjCRequiresPropertyDefs final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCRequiresPropertyDefsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6582,11 +6601,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCRequiresPropertyDefsAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6612,7 +6631,7 @@ struct ParsedAttrInfoObjCRequiresSuper final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCRequiresSuperSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
@@ -6621,7 +6640,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
@@ -6646,7 +6665,7 @@ struct ParsedAttrInfoObjCReturnsInnerPointer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCReturnsInnerPointerSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and Objective-C properties";
@@ -6655,7 +6674,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_property, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -6681,7 +6700,7 @@ struct ParsedAttrInfoObjCRootClass final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCRootClassSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6690,11 +6709,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCRootClassAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6720,7 +6739,7 @@ struct ParsedAttrInfoObjCRuntimeName final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCRuntimeNameSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCProtocolDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces and Objective-C protocols";
@@ -6729,7 +6748,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_protocol, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -6755,7 +6774,7 @@ struct ParsedAttrInfoObjCRuntimeVisible final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCRuntimeVisibleSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6764,11 +6783,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCRuntimeVisibleAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6794,7 +6813,7 @@ struct ParsedAttrInfoObjCSubclassingRestricted final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ObjCSubclassingRestrictedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
@@ -6803,11 +6822,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ObjCSubclassingRestrictedAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -6836,7 +6855,7 @@ struct ParsedAttrInfoOpenCLAccess final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLAccessSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters and typedefs";
@@ -6845,7 +6864,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_read_only = 0,
     Keyword_write_only = 2,
@@ -6889,7 +6908,7 @@ struct ParsedAttrInfoOpenCLConstantAddressSpace final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLConstantAddressSpaceSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_constant = 0,
     GNU_opencl_constant = 2,
@@ -6933,7 +6952,7 @@ struct ParsedAttrInfoOpenCLGenericAddressSpace final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLGenericAddressSpaceSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_generic = 0,
     GNU_opencl_generic = 2,
@@ -6977,7 +6996,7 @@ struct ParsedAttrInfoOpenCLGlobalAddressSpace final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLGlobalAddressSpaceSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_global = 0,
     GNU_opencl_global = 2,
@@ -7017,7 +7036,7 @@ struct ParsedAttrInfoOpenCLIntelReqdSubGroupSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OpenCLIntelReqdSubGroupSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -7026,7 +7045,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -7050,7 +7069,7 @@ struct ParsedAttrInfoOpenCLKernel final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLKernelSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -7059,7 +7078,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) OpenCLKernelAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -7087,7 +7106,7 @@ struct ParsedAttrInfoOpenCLLocalAddressSpace final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLLocalAddressSpaceSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_local = 0,
     GNU_opencl_local = 2,
@@ -7127,7 +7146,7 @@ struct ParsedAttrInfoOpenCLNoSVM final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OpenCLNoSVMSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -7136,7 +7155,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.OpenCL)
     return true;
@@ -7145,7 +7164,7 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
@@ -7172,7 +7191,7 @@ struct ParsedAttrInfoOpenCLPrivateAddressSpace final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OpenCLPrivateAddressSpaceSpellings;
   }
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Keyword_private = 0,
     GNU_opencl_private = 2,
@@ -7233,7 +7252,7 @@ struct ParsedAttrInfoOptimizeNone final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OptimizeNoneSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -7242,7 +7261,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -7268,7 +7287,7 @@ struct ParsedAttrInfoOverloadable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OverloadableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -7277,11 +7296,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) OverloadableAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -7305,7 +7324,7 @@ struct ParsedAttrInfoOwner final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = OwnerSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isStruct(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs";
@@ -7314,7 +7333,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record_not_is_union, /*IsSupported=*/true));
 }
 
@@ -7345,7 +7364,7 @@ struct ParsedAttrInfoOwnership final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = OwnershipSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
@@ -7354,7 +7373,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_ownership_holds = 0,
     CXX11_clang_ownership_holds = 1,
@@ -7425,7 +7444,7 @@ struct ParsedAttrInfoParamTypestate final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ParamTypestateSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -7434,7 +7453,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -7485,7 +7504,7 @@ struct ParsedAttrInfoPassObjectSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = PassObjectSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -7494,7 +7513,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_pass_object_size = 0,
     CXX11_clang_pass_object_size = 1,
@@ -7518,7 +7537,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -7543,7 +7562,7 @@ struct ParsedAttrInfoPatchableFunctionEntry final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = PatchableFunctionEntrySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -7552,12 +7571,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::aarch64 || T.getArch() == llvm::Triple::aarch64_be || T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -7602,7 +7621,7 @@ struct ParsedAttrInfoPointer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = PointerSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isStruct(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs";
@@ -7611,7 +7630,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record_not_is_union, /*IsSupported=*/true));
 }
 
@@ -7630,7 +7649,7 @@ struct ParsedAttrInfoPragmaClangBSSSection final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -7654,7 +7673,7 @@ struct ParsedAttrInfoPragmaClangDataSection final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -7678,7 +7697,7 @@ struct ParsedAttrInfoPragmaClangRelroSection final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -7702,7 +7721,7 @@ struct ParsedAttrInfoPragmaClangRodataSection final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
@@ -7726,7 +7745,7 @@ struct ParsedAttrInfoPragmaClangTextSection final : public ParsedAttrInfo {
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 0;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -7796,7 +7815,7 @@ struct ParsedAttrInfoPtGuardedBy final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = PtGuardedBySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -7825,7 +7844,7 @@ struct ParsedAttrInfoPtGuardedVar final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = PtGuardedVarSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
@@ -7893,7 +7912,7 @@ struct ParsedAttrInfoPure final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = PureSpellings;
   }
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) PureAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -7961,7 +7980,7 @@ struct ParsedAttrInfoReinitializes final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ReinitializesSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isNonStaticNonConstCXXMethod(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-static non-const member functions";
@@ -7970,7 +7989,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ReinitializesAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -8001,7 +8020,7 @@ struct ParsedAttrInfoReleaseCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ReleaseCapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8010,7 +8029,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_release_capability = 0,
     CXX11_clang_release_capability = 1,
@@ -8059,7 +8078,7 @@ struct ParsedAttrInfoReleaseHandle final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ReleaseHandleSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -8068,7 +8087,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -8091,7 +8110,7 @@ struct ParsedAttrInfoRenderScriptKernel final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = RenderScriptKernelSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8100,7 +8119,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.RenderScript)
     return true;
@@ -8109,11 +8128,11 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) RenderScriptKernelAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -8137,7 +8156,7 @@ struct ParsedAttrInfoReqdWorkGroupSize final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ReqdWorkGroupSizeSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8146,7 +8165,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -8176,7 +8195,7 @@ struct ParsedAttrInfoRequiresCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = RequiresCapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8185,7 +8204,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_requires_capability = 0,
     CXX11_clang_requires_capability = 1,
@@ -8235,7 +8254,7 @@ struct ParsedAttrInfoRestrict final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = RestrictSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8244,7 +8263,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     Declspec_restrict = 0,
     GNU_malloc = 1,
@@ -8264,7 +8283,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -8288,7 +8307,7 @@ struct ParsedAttrInfoReturnTypestate final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ReturnTypestateSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and parameters";
@@ -8297,7 +8316,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
@@ -8323,7 +8342,7 @@ struct ParsedAttrInfoReturnsNonNull final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ReturnsNonNullSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and functions";
@@ -8332,7 +8351,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
@@ -8358,7 +8377,7 @@ struct ParsedAttrInfoReturnsTwice final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ReturnsTwiceSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8367,11 +8386,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ReturnsTwiceAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -8416,7 +8435,7 @@ struct ParsedAttrInfoSYCLKernel final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = SYCLKernelSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isFunctionTmpl(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "function templates";
@@ -8425,7 +8444,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.SYCLIsDevice)
     return true;
@@ -8454,7 +8473,7 @@ struct ParsedAttrInfoScopedLockable final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = ScopedLockableSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -8463,11 +8482,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) ScopedLockableAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -8494,7 +8513,7 @@ struct ParsedAttrInfoSection final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SectionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isGlobalVar(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions, global variables, Objective-C methods, and Objective-C properties";
@@ -8503,7 +8522,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_section = 0,
     CXX11_gnu_section = 1,
@@ -8523,7 +8542,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
@@ -8552,7 +8571,7 @@ struct ParsedAttrInfoSelectAny final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = SelectAnySpellings;
   }
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) SelectAnyAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -8598,7 +8617,7 @@ struct ParsedAttrInfoSetTypestate final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SetTypestateSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8607,7 +8626,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function_is_member, /*IsSupported=*/LangOpts.CPlusPlus));
 }
 
@@ -8630,7 +8649,7 @@ struct ParsedAttrInfoSharedTrylockFunction final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = SharedTrylockFunctionSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8660,7 +8679,7 @@ struct ParsedAttrInfoSpeculativeLoadHardening final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SpeculativeLoadHardeningSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -8669,7 +8688,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -8758,7 +8777,7 @@ struct ParsedAttrInfoSwiftContext final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SwiftContextSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -8767,7 +8786,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -8792,7 +8811,7 @@ struct ParsedAttrInfoSwiftErrorResult final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SwiftErrorResultSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -8801,7 +8820,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -8826,7 +8845,7 @@ struct ParsedAttrInfoSwiftIndirectResult final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = SwiftIndirectResultSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -8835,7 +8854,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -8881,7 +8900,7 @@ struct ParsedAttrInfoTLSModel final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = TLSModelSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isTLSVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "thread-local variables";
@@ -8890,7 +8909,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_thread_local, /*IsSupported=*/true));
 }
 
@@ -8915,7 +8934,7 @@ struct ParsedAttrInfoTarget final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = TargetSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8924,7 +8943,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -8948,7 +8967,7 @@ struct ParsedAttrInfoTestTypestate final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = TestTypestateSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -8957,7 +8976,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function_is_member, /*IsSupported=*/LangOpts.CPlusPlus));
 }
 
@@ -9003,7 +9022,7 @@ struct ParsedAttrInfoThread final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = ThreadSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
@@ -9012,7 +9031,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.MicrosoftExt)
     return true;
@@ -9042,7 +9061,7 @@ struct ParsedAttrInfoTransparentUnion final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = TransparentUnionSpellings;
   }
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if ((!LangOpts.CPlusPlus))
     return true;
@@ -9071,7 +9090,7 @@ struct ParsedAttrInfoTrivialABI final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = TrivialABISpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -9080,7 +9099,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.CPlusPlus)
     return true;
@@ -9089,11 +9108,11 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
   return false;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) TrivialABIAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -9120,7 +9139,7 @@ struct ParsedAttrInfoTryAcquireCapability final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = TryAcquireCapabilitySpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9129,7 +9148,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_try_acquire_capability = 0,
     CXX11_clang_try_acquire_capability = 1,
@@ -9308,7 +9327,7 @@ struct ParsedAttrInfoUninitialized final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = UninitializedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isLocalVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "local variables";
@@ -9317,7 +9336,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_local, /*IsSupported=*/true));
 }
 
@@ -9344,7 +9363,7 @@ struct ParsedAttrInfoUnused final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = UnusedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<ObjCIvarDecl>(D) && !isa<TypeDecl>(D) && !isa<EnumDecl>(D) && !isa<EnumConstantDecl>(D) && !isa<LabelDecl>(D) && !isa<FieldDecl>(D) && !isa<ObjCMethodDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, non-static data members, types, enums, enumerators, labels, non-static data members, Objective-C methods, functions, and function pointers";
@@ -9353,7 +9372,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     CXX11_maybe_unused = 0,
     GNU_unused = 1,
@@ -9396,7 +9415,7 @@ struct ParsedAttrInfoUseHandle final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = UseHandleSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
@@ -9405,7 +9424,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
@@ -9430,7 +9449,7 @@ struct ParsedAttrInfoUsed final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = UsedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isNonLocalVar(D) && !isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables with non-local storage, functions, and Objective-C methods";
@@ -9439,7 +9458,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) UsedAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -9464,7 +9483,7 @@ struct ParsedAttrInfoUuid final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = UuidSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D) && !isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and enums";
@@ -9473,7 +9492,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
+bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const override {
   auto &LangOpts = S.LangOpts;
   if (LangOpts.MicrosoftExt || LangOpts.Borland)
     return true;
@@ -9502,7 +9521,7 @@ struct ParsedAttrInfoVecReturn final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = VecReturnSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "classes";
@@ -9511,7 +9530,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
@@ -9534,7 +9553,7 @@ struct ParsedAttrInfoVecTypeHint final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = VecTypeHintSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9543,7 +9562,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -9633,7 +9652,7 @@ struct ParsedAttrInfoWarnUnused final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WarnUnusedSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
@@ -9642,11 +9661,11 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) WarnUnusedAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -9675,7 +9694,7 @@ struct ParsedAttrInfoWarnUnusedResult final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WarnUnusedResultSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<ObjCMethodDecl>(D) && !isa<EnumDecl>(D) && !isa<RecordDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, enums, structs, unions, classes, functions, and function pointers";
@@ -9684,7 +9703,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     CXX11_nodiscard = 0,
     C2x_nodiscard = 1,
@@ -9708,7 +9727,7 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_enum, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
@@ -9736,7 +9755,7 @@ struct ParsedAttrInfoWeak final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WeakSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
@@ -9745,13 +9764,13 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) WeakAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -9798,7 +9817,7 @@ struct ParsedAttrInfoWeakRef final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WeakRefSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables and functions";
@@ -9807,7 +9826,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
@@ -9833,7 +9852,7 @@ struct ParsedAttrInfoWebAssemblyExportName final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WebAssemblyExportNameSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9842,12 +9861,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::wasm32 || T.getArch() == llvm::Triple::wasm64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -9872,7 +9891,7 @@ struct ParsedAttrInfoWebAssemblyImportModule final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WebAssemblyImportModuleSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9881,12 +9900,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::wasm32 || T.getArch() == llvm::Triple::wasm64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -9911,7 +9930,7 @@ struct ParsedAttrInfoWebAssemblyImportName final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WebAssemblyImportNameSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9920,12 +9939,12 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::wasm32 || T.getArch() == llvm::Triple::wasm64);
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -9948,7 +9967,7 @@ struct ParsedAttrInfoWorkGroupSizeHint final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = WorkGroupSizeHintSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
@@ -9957,7 +9976,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
@@ -9982,7 +10001,7 @@ struct ParsedAttrInfoX86ForceAlignArgPointer final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
     Spellings = X86ForceAlignArgPointerSpellings;
   }
-virtual bool existsInTarget(const TargetInfo &Target) const {
+bool existsInTarget(const TargetInfo &Target) const override {
   const llvm::Triple &T = Target.getTriple(); (void)T;
   return true && (T.getArch() == llvm::Triple::x86 || T.getArch() == llvm::Triple::x86_64);
 }
@@ -10011,7 +10030,7 @@ struct ParsedAttrInfoXRayInstrument final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = XRayInstrumentSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -10020,7 +10039,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
+unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const override {
   enum Spelling {
     GNU_xray_always_instrument = 0,
     CXX11_clang_xray_always_instrument = 1,
@@ -10044,12 +10063,12 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
   }
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
-virtual AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const {
+AttrHandling handleDeclAttribute(Sema &S, Decl *D,const ParsedAttr &Attr) const override {
   D->addAttr(::new (S.Context) XRayInstrumentAttr(S.Context, Attr));
   return AttributeApplied;
 }
@@ -10075,7 +10094,7 @@ struct ParsedAttrInfoXRayLogArgs final : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 1;
     Spellings = XRayLogArgsSpellings;
   }
-virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const override {
   if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
@@ -10084,7 +10103,7 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
   return true;
 }
 
-virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const override {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
@@ -10121,6 +10140,7 @@ static const ParsedAttrInfo *AttrInfoMap[] = {
 &ParsedAttrInfoArgumentWithTypeTag::Instance,
 &ParsedAttrInfoArmBuiltinAlias::Instance,
 &ParsedAttrInfoArmMveStrictPolymorphism::Instance,
+&ParsedAttrInfoArmSveVectorBits::Instance,
 &ParsedAttrInfoArtificial::Instance,
 &ParsedAttrInfoAssertCapability::Instance,
 &ParsedAttrInfoAssertExclusiveLock::Instance,

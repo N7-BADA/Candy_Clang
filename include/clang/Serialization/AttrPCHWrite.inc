@@ -255,6 +255,13 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::ArmSveVectorBits: {
+    const auto *SA = cast<ArmSveVectorBitsAttr>(A);
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.push_back(SA->getNumBits());
+    break;
+  }
   case attr::Artificial: {
     const auto *SA = cast<ArtificialAttr>(A);
     Record.push_back(SA->isInherited());

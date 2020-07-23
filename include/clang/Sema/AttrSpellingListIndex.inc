@@ -255,6 +255,11 @@
         return 2;
     break;
   }
+  case AT_ArmSveVectorBits: {
+    if (Name == "arm_sve_vector_bits" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    break;
+  }
   case AT_Artificial: {
     if (Name == "artificial" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
